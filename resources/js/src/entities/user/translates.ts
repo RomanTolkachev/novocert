@@ -1,0 +1,32 @@
+import type { IUser } from "./model";
+
+export const translations: Record<keyof IUser, string> = {
+    id: "id",
+    name: "Имя",
+    email: "Email",
+    email_verified_at: "Email подтвержден",
+    created_at: "Дата создания",
+    updated_at: "Дата обновления",
+    deleted_at: "Дата удаления",
+    cli: "CLI",
+    surname: "Фамилия",
+    fathersname: "Отчество",
+    position: "Должность",
+    avatar: "Аватар",
+    status: "Статус",
+    confirmation: "Подтверждение",
+    gid: "gid",
+    tech_begin: "tech_begin",
+    tech_change: "tech_change",
+    tech_create: "tech_create",
+    tech_description: "tech_description",
+    tech_end: "tech_end",
+    tech_source: "tech_source",
+    tech_user: "tech_user",
+    roles__name: "Роли",
+    roles__created_at: "Роль создана",
+    roles__guard_name: "guard name",
+    roles__id: "roles__id",
+    roles__pivot: "roles__pivot",
+    roles__updated_at: "roles__updated_at"
+}

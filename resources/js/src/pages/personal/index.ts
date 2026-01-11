@@ -1,0 +1,7 @@
+export { PersonalPage, SaPersonalPage } from "./layout"
+export { Certs } from "./certs"
+export { Companies } from "./companies"
+export { Feedbacks } from "./feedbacks"
+export { Organs } from "./organs"
+export { Systems } from "./systems"
+export { Users } from "./users"

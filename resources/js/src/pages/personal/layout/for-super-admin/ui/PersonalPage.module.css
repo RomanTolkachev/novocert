@@ -1,0 +1,12 @@
+.container {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    height: 100%;
+    /* width: 100%;
+    overflow: hidden; */
+    min-width: 0;
+}
+
+.container :global(> *) {
+    min-height: 0;
+}

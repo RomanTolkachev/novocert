@@ -1,0 +1,30 @@
+export interface IUser {
+    id: number;
+    name: string;
+    email: string;
+    email_verified_at: string | null;
+    created_at: string;
+    updated_at: string;
+    deleted_at: string | null;
+    cli: string;
+    surname: string;
+    fathersname: string | null;
+    position: string;
+    avatar: string;
+    status: string;
+    confirmation: string | null;
+    tech_description: string;
+    tech_begin: string;
+    tech_end: string;
+    tech_create: string;
+    tech_change: string | null;
+    tech_source: string;
+    tech_user: string;
+    gid: string;
+    roles__created_at: string;
+    roles__guard_name: string;
+    roles__id: string;
+    roles__name: string;
+    roles__pivot: string;
+    roles__updated_at: string;
+}

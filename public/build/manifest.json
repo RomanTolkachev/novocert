@@ -1,0 +1,33 @@
+{
+  "../public/fonts/Ubuntu-Bold.ttf": {
+    "file": "assets/Ubuntu-Bold-BGoo8i9Y.ttf",
+    "src": "../public/fonts/Ubuntu-Bold.ttf"
+  },
+  "../public/fonts/Ubuntu-Light.ttf": {
+    "file": "assets/Ubuntu-Light-DlXMI-yU.ttf",
+    "src": "../public/fonts/Ubuntu-Light.ttf"
+  },
+  "../public/fonts/Ubuntu-Medium.ttf": {
+    "file": "assets/Ubuntu-Medium-C-1-7KOl.ttf",
+    "src": "../public/fonts/Ubuntu-Medium.ttf"
+  },
+  "../public/fonts/Ubuntu-Regular.ttf": {
+    "file": "assets/Ubuntu-Regular-bmdV8fUx.ttf",
+    "src": "../public/fonts/Ubuntu-Regular.ttf"
+  },
+  "app/App.tsx": {
+    "file": "assets/App-G5S85UBq.js",
+    "name": "App",
+    "src": "app/App.tsx",
+    "isEntry": true,
+    "css": [
+      "assets/App-BU2vWhpb.css"
+    ],
+    "assets": [
+      "assets/Ubuntu-Light-DlXMI-yU.ttf",
+      "assets/Ubuntu-Regular-bmdV8fUx.ttf",
+      "assets/Ubuntu-Medium-C-1-7KOl.ttf",
+      "assets/Ubuntu-Bold-BGoo8i9Y.ttf"
+    ]
+  }
+}

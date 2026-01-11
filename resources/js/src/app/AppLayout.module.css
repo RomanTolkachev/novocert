@@ -1,0 +1,10 @@
+.container {
+    display: grid;
+    grid-template-rows: auto 1fr auto;  /* ✅ БЕЗ кавычек */
+    height: 100svh;                     /* ✅ БЕЗ кавычек */
+    width: 100%;                        /* ✅ БЕЗ кавычек */
+}
+
+.container :global(> *) {
+    min-height: 0;
+}

@@ -1,0 +1,34 @@
+.tableWrapper {
+    flex: 1;
+    min-height: 0;
+    overflow: 'auto';
+    display: 'flex';
+    flex-direction: 'column';
+}
+
+.filtersWrapper {
+    grid-column: 2;
+    grid-row: 1;
+    height: 100%;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-left: 1px solid;
+}
+
+.filtersToggle {
+    height: 60px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.filtersContentWrapper {
+    flex: 1;
+    min-height: 0;
+    overflow: 'hidden';
+    display: 'flex';
+    flex-direction: 'column';
+}

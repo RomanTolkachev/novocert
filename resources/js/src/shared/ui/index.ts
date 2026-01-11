@@ -1,0 +1,7 @@
+export { Footer } from "./footer"
+export { Header } from "./header"
+export { PasswordInput } from "./input-password"
+export { Preloader } from "./preloader"
+export { CustomTable } from "./custom-table"
+export { CustomTooltip } from "./custom-tooltip"
+export { SkeletonImage } from "./sceleton-image"

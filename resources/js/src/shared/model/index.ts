@@ -1,0 +1,1 @@
+export { AuthContext, type IAuthContext } from "./authContext"

@@ -1,0 +1,1 @@
+export { PersonalPage as SaPersonalPage } from "./PersonalPage"
