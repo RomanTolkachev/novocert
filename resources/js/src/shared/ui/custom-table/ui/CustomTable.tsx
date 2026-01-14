@@ -119,7 +119,7 @@ export function CustomTable<T extends Record<string, any>>({
                                     key={row.id}
                                     sx={{
                                         '&:last-child td, &:last-child th': { border: 0 },
-                                        '&:hover': { backgroundColor: 'action.hover' }
+                                        '&:hover': { backgroundColor: 'action.hover' },
                                     }}
                                 >
                                     {row.getVisibleCells().map(cell => (

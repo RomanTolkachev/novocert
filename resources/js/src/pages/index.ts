@@ -9,3 +9,5 @@ export {
     Systems,
     Users
 } from "./personal"
+
+export { CertSystemsPage } from "./public"

@@ -1,8 +1,10 @@
 import type { FC } from "react"
 import { Routing } from "./Routing"
 import { Footer, Header } from "../shared"
+import { useTheme } from "@mui/material"
 
-export const AppLayout: FC = () => {
+export const AppLayout: FC = () => { 
+    const theme = useTheme()
     return (
         <div style={{
             display: 'grid',
@@ -11,7 +13,7 @@ export const AppLayout: FC = () => {
             width: '100%',
         }}>
             <Header />
-            <main style={{minHeight: 0}}>
+            <main style={{minHeight: 0, paddingInline: theme.spacing(2)}}>
                 <Routing />
             </main>
             <Footer />

@@ -6,7 +6,7 @@ export const config: ITableConfig<ISystem> = {
     filtersUrl: "/admin/get-system-list-filters",
     translations: translations,
     withRowActions: true,
-    columnOrder: ["cert_system_name", "status__name", "cert_number", "bus_begin", "bus_end", "accreditation", 'documents_count', "organs_count", "organ_status_", "img_path", 'cert_system_name', ],
+    columnOrder: ["status__name", "bus_begin", "bus_end", "accreditation", 'documents_count', "organs_count", "organ_status_", "img_path", ],
     hiddenColumns: [
         "gid", "status__gid", "organ_status_", "docum_web_reference", 
     ],

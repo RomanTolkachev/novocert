@@ -10,12 +10,12 @@ use App\UseCases\User\{
 };
 use App\UseCases\LastFiveCerts\LastFiveCertsController;
 use App\UseCases\Admin\Companies\{
-    GetCompaniesList\GetCompaniesListController, 
-    GetFiltersForCompanies\GetFiltersForCompaniesController, 
+    GetCompaniesList\GetCompaniesListController,
+    GetFiltersForCompanies\GetFiltersForCompaniesController,
 };
 use App\UseCases\Admin\Users\{
-    GetUsersList\GetUsersListController, 
-    GetFiltersForUsers\GetFiltersForUsersController, 
+    GetUsersList\GetUsersListController,
+    GetFiltersForUsers\GetFiltersForUsersController,
 };
 use App\UseCases\Admin\Systems\{
     GetSystemsList\GetSystemsListController,
@@ -33,19 +33,28 @@ use App\UseCases\Admin\Feedbacks\{
     GetFeedbacksList\GetFeedbacksListController,
     GetFeedbacksListFilters\GetFeedbacksListFiltersController,
 };
+
+use App\UseCases\Public\Systems\{
+    GetSystemsList\GetSystemsListController as GetPublicSystemsListController,
+    GetSystemsListFilters\GetSystemsListFiltersController as GetPublicSystemsListFiltersController,
+};
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->middleware('api')->group(function () {
     Route::post('start-session', StartSessionController::class); // с логином и паролем
     Route::post('refresh-session', RefreshSessionController::class);
     Route::middleware('auth:jwt')->group(function () {
-        Route::get('get-user', GetUserController::class); // with-credentials: true обязательно
+        Route::get('get-user', GetUserController::class); // with-credentials: true
         Route::post('close-session', CloseSessionController::class);
-        
     });
 });
 
-Route::prefix("admin")->middleware('auth:jwt')->group(function() {
+Route::prefix("public")->group(function () {
+    Route::get("get-systems-list", GetPublicSystemsListController::class);
+    Route::get("get-systems-list-filters", GetPublicSystemsListFiltersController::class);
+});
+
+Route::prefix("admin")->middleware('auth:jwt')->group(function () {
     Route::get("get-users", GetUsersListController::class);
     Route::get("get-users-filters", GetFiltersForUsersController::class);
     Route::get("get-companies", GetCompaniesListController::class);

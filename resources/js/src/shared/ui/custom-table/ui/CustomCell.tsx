@@ -1,14 +1,16 @@
 import { ASSETS_URL, CustomTooltip, makeList, SkeletonImage } from "@/shared";
 import TableCell from "@mui/material/TableCell";
-import { flexRender, type Cell } from "@tanstack/react-table";
+import { flexRender, type Cell, type Row } from "@tanstack/react-table";
 import { useRef, type ReactNode, type RefObject } from "react";
 import { ImageSmall, StatusIcon, TextWithImageCell } from "./cells";
+import { Link, Typography } from "@mui/material";
+import type { ISystem } from "@/entities/system";
 
 interface CustomCellProps<T extends Record<string, any>> {
     cellData: Cell<T, unknown>;
 }
 
-
+type TStatusLiter = "N" | "A" | "L" | "PL" | "B" | "T" | "P" | "S" | "D" | undefined | null;
 
 /**
  * должна возвращать TableCell. К сожалению не нашел как тайпскриптом проверить
@@ -38,14 +40,14 @@ export const CustomCell = <T extends Record<string, any>>({
         case "cert__name": {
             const { id, original: { cert__status } } = context.row;
             return (
-                <TextWithImageCell id={id} text={value} img_component={<StatusIcon status_liter={cert__status}/>} />
+                <TextWithImageCell id={id} text={value} img_component={<StatusIcon status_liter={cert__status} />} />
             );
         }
 
         case "organ__name": {
             const { id, original: { organ__status } } = context.row;
             return (
-                <TextWithImageCell id={id} text={value} img_component={<StatusIcon status_liter={organ__status}/>} />
+                <TextWithImageCell id={id} text={value} img_component={<StatusIcon status_liter={organ__status} />} />
             );
         }
 
@@ -66,6 +68,80 @@ export const CustomCell = <T extends Record<string, any>>({
                 const { id, original: { docum_web_reference } } = context.row;
                 return (
                     <TextWithImageCell id={id} text={value} img_path={docum_web_reference} />
+                );
+            }
+
+            return <TableCell align="center" key={id}>-</TableCell>;
+
+        case 'system_name':
+            if (value) {
+                const { id, original: { docum_web_reference, img_path } } = context.row as unknown as Row<ISystem>;
+                return (
+                    <TextWithImageCell
+                        img_path={img_path}
+                        id={id}
+                        text={<Link target="_blank" rel="noreferrer" href={docum_web_reference} color="inherit">{value}</Link>} />
+                );
+            }
+
+            return <TableCell align="center" key={id}>-</TableCell>;
+
+        case 'owner__short_name':
+            if (value) {
+                const { id, original: { owner__logo_path } } = context.row as unknown as Row<ISystem>;
+                return (
+                    <TextWithImageCell
+                        img_path={owner__logo_path}
+                        id={id}
+                        text={value} />
+                );
+            }
+
+            return <TableCell align="center" key={id}>-</TableCell>;
+
+        case 'owner__inn':
+            if (value) {
+                const { original: { owner__ogrn } } = context.row as unknown as Row<ISystem>;
+                return (
+                    <TableCell>
+                        <Typography>{value} /<br /></Typography>
+                        <Typography>{owner__ogrn}</Typography>
+                    </TableCell>
+                );
+            }
+
+            return <TableCell align="center" key={id}>-</TableCell>;
+
+        case 'system_cert_number':
+            if (value) {
+                const { id, original: { status__gid } } = context.row as unknown as Row<ISystem>;
+                return (
+                    <TextWithImageCell
+                        img_component={<StatusIcon status_liter={status__gid as TStatusLiter} />}
+                        id={id}
+                        text={value} />
+                );
+            }
+
+            return <TableCell align="center" key={id}>-</TableCell>;
+
+
+
+        case 'cert__name':
+            if (value) {
+                const { id, original: { cert__status } } = context.row;
+                return (
+                    <TextWithImageCell id={id} text={value} img_path={cert__status} />
+                );
+            }
+
+            return <TableCell align="center" key={id}>-</TableCell>;
+
+        case 'applicant__short_name':
+            if (value) {
+                const { id, original: { applicant__logo } } = context.row;
+                return (
+                    <TextWithImageCell id={id} text={value} img_path={applicant__logo} />
                 );
             }
 
@@ -137,6 +213,13 @@ export const CustomCell = <T extends Record<string, any>>({
                     <StatusIcon title={statusTitle} status_liter={value as any} />
                 </TableCell>
             )
+        }
+
+        case "system__name": {
+            const { id, original: { system__img } } = context.row;
+            return (
+                <TextWithImageCell id={id} text={value} img_path={system__img} />
+            );
         }
 
         case "type__cert_system_name": {

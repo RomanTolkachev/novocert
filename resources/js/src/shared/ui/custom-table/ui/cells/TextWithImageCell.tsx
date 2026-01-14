@@ -4,7 +4,7 @@ import type { FC, ReactNode } from "react";
 import { WrapWithTooltip } from "./WrapWithTooltip";
 
 type Props = {
-    text: string
+    text: string | ReactNode
     img_path?: string
     img_component?: ReactNode
     id: string
@@ -18,11 +18,11 @@ export const TextWithImageCell: FC<Props> = ({ text, img_path, id, img_component
                     display: "flex",
                     height: "100%",
                     alignItems: "center",
-                    justifyContent: "space-between",
+                    justifyContent: img_component ? "space-between" : "center",
                     gap: '16px'
                 }}
             >
-                <span>{text ?? "-"}</span>
+                <span style={{fontWeight: 300}}>{text ?? "-"}</span>
                 {img_path && (
                     <WrapWithTooltip isImage tooltipContent={
                         <SkeletonImage

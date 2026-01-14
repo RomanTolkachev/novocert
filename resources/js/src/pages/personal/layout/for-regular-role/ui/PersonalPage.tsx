@@ -62,7 +62,6 @@ export const PersonalPage: FC<PropsWithChildren> = () => {
                         ))}
                     </List>
                 </Drawer>
-
             </Box>
             <Box sx={{ minWidth: 0, minHeight: 0 }}>
                 <Outlet />

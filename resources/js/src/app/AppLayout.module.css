@@ -1,8 +1,8 @@
 .container {
     display: grid;
-    grid-template-rows: auto 1fr auto;  /* ✅ БЕЗ кавычек */
-    height: 100svh;                     /* ✅ БЕЗ кавычек */
-    width: 100%;                        /* ✅ БЕЗ кавычек */
+    grid-template-rows: auto 1fr auto;
+    height: 100svh;
+    width: 100%;
 }
 
 .container :global(> *) {

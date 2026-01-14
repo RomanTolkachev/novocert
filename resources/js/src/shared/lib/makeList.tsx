@@ -44,7 +44,6 @@ export const makeList = (
 
     if (!text) return null;
 
-    // ----- CASE: ReactNode -----
     if (typeof text !== 'string') {
         const liStyle = maxLines
             ? {
@@ -61,14 +60,13 @@ export const makeList = (
             <List sx={{ listStyle: showBullets ? 'disc' : 'none', pl: showBullets ? 2 : 0 }}>
                 <ListItem disablePadding sx={{ display: 'list-item' }}>
                     <ListItemText
-                        primary={<Typography sx={liStyle}>{text}</Typography>}
+                        primary={<Typography  sx={liStyle}>{text}</Typography>}
                     />
                 </ListItem>
             </List>
         );
     }
 
-    // ----- CASE: string -----
     let parts = text.split(delimiter);
 
     if (trimItems) parts = parts.map(p => p.trim());
@@ -98,10 +96,10 @@ export const makeList = (
                 const showDelim = showDelimiter && !isLast;
 
                 return (
-                    <ListItem key={index} disablePadding sx={{ display: 'list-item', py: 0.25 }}>
+                    <ListItem key={index} disablePadding sx={{ display: 'list-item' }}>
                         <ListItemText
                             primary={
-                                <Typography sx={liStyle}>
+                                <Typography  sx={liStyle}>
                                     {highlightPattern ? highlight(part, highlightPattern) : part}
                                     {showDelim ? delimiter : ''}
                                 </Typography>
@@ -112,10 +110,10 @@ export const makeList = (
             })}
 
             {hiddenItemsCount > 0 && showMoreText && (
-                <ListItem disablePadding sx={{ display: 'list-item', py: 0.25, listStyle: 'none' }}>
+                <ListItem disablePadding sx={{ display: 'list-item',  listStyle: 'none' }}>
                     <ListItemText
                         primary={
-                            <Typography sx={{ ...liStyle, WebkitLineClamp: 1, opacity: 0.7 }}>
+                            <Typography  sx={{ ...liStyle, WebkitLineClamp: 1, opacity: 0.7 }}>
                                 {showMoreText === 'howMany'
                                     ? `... +${hiddenItemsCount} ${getElementWord(hiddenItemsCount)}`
                                     : showMoreText}
