@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Route, Routes } from "react-router-dom";
-import { OnlyAuth, OnlyUnAuth, RoleGuard } from "./AuthProvider";
-import { Certs, CertSystemsPage, Companies, Feedbacks, LoginPage, Organs, PersonalPage, SaPersonalPage, Systems, Users } from "@/pages";
+import { OnlyAuth, RoleGuard } from "./AuthProvider";
+import { Certs, CertSystemsPage, Companies, Feedbacks, Organs, PersonalPage, SaPersonalPage, Systems, Users } from "@/pages";
 import { Bio } from "@/widgets";
 
 
@@ -9,12 +9,12 @@ export const Routing: FC = () => {
     return (
         <Routes>
             <Route path="/" element={<>главная</>} />
-            <Route path="/cert_systems" element={<CertSystemsPage />} />
-            <Route path="/cert_authorities" element={<>органы по сертификации</>} />
-            <Route path="/certs" element={<>сертификаты</>} />
-            <Route path="/docs" element={<>документы</>} />
-            <Route path="/companies" element={<>компании</>} />
-            <Route path="/dictionaries" element={<>справочники</>} />
+            <Route path="cert_systems" element={<CertSystemsPage />} />
+            <Route path="cert_authorities" element={<>органы по сертификации</>} />
+            <Route path="certs" element={<>сертификаты</>} />
+            <Route path="docs" element={<>документы</>} />
+            <Route path="companies" element={<>компании</>} />
+            <Route path="dictionaries" element={<>справочники</>} />
             <Route
                 path="/personal/*"
                 element={
@@ -33,7 +33,7 @@ export const Routing: FC = () => {
                 <Route path="certs" element={<Certs />}></Route>
                 <Route path="feedbacks" element={<Feedbacks />}></Route>
             </Route>
-            <Route path="/login" element={<OnlyUnAuth><LoginPage /></OnlyUnAuth>} />
+            
         </Routes>
     )
 }
