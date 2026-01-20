@@ -2,13 +2,15 @@ import { useSearchParams } from 'react-router-dom'
 import qs from 'qs'
 import { useCallback, useMemo } from 'react'
 
-type QueryParams = Record<string, any>
-export type TParamsCustom = [(query: QueryParams, replace?: boolean) => void, () => QueryParams]
+export type TParamsCustom<Q extends Record<string, any>> = [
+    (query: Q, replace?: boolean) => void,
+    () => Q
+]
 
-export function useParamsCustom(): TParamsCustom {
+export function useParamsCustom<Q extends Record<string, any> = Record<string, any>>(): TParamsCustom<Q> {
     const [searchParams, setSearchParams] = useSearchParams()
 
-    const setQuery = useCallback((query: Record<string, any>, replace: boolean = false) => {
+    const setQuery = useCallback((query: Q, replace: boolean = false) => {
         setSearchParams(
             qs.stringify(query, {
                 arrayFormat: 'brackets',
@@ -19,9 +21,9 @@ export function useParamsCustom(): TParamsCustom {
         )
     }, [setSearchParams])
 
-    const getQuery = useCallback(<T extends Record<string, unknown>>(): T => {
-        return qs.parse(searchParams.toString()) as T
+    const getQuery = useCallback((): Q => {
+        return qs.parse(searchParams.toString()) as Q
     }, [searchParams])
 
-    return useMemo(() => [setQuery, getQuery] as TParamsCustom, [setQuery, getQuery])
+    return useMemo(() => [setQuery, getQuery] as TParamsCustom<Q>, [setQuery, getQuery])
 }

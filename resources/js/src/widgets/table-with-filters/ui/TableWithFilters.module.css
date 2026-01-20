@@ -10,7 +10,7 @@
     grid-column: 2;
     grid-row: 1;
     height: 100%;
-    width: fit-content;
+    /* width: fit-content; */
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -28,7 +28,7 @@
 .filtersContentWrapper {
     flex: 1;
     min-height: 0;
-    overflow: 'hidden';
-    display: 'flex';
-    flex-direction: 'column';
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }

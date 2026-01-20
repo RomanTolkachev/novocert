@@ -127,7 +127,6 @@ export const TableWithFilters = <T extends Record<string, any>>({
                             pr: .3,
                             transition: 'opacity 0.2s ease-in-out, max-width 0.3s ease-in-out',
                             opacity: isDrawerOpen ? 1 : 0,
-                            // maxWidth: isDrawerOpen ? '100%' : '0px',
                             pointerEvents: isDrawerOpen ? 'auto' : 'none',
                             display: "flex",
                             flexDirection: "column"

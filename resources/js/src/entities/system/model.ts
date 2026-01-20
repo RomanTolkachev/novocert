@@ -8,8 +8,6 @@ export interface ISystem {
     applicant: string;
     bus_begin: string;
     bus_end: string;
-    tech_begin: string;
-    tech_end: string;
     img_path: string;
     organ_status_: string;
     organs_count: string;

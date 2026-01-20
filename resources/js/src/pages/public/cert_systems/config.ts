@@ -8,7 +8,7 @@ export const config: ITableConfig<ISystem> = {
     withRowActions: false,
     columnOrder: [],
     hiddenColumns: [
-        "gid", "id", "owner__gid","status__gid", "bus_end", "applicant", "tech_end", "tech_begin", "docum_web_reference",
+        "gid", "id", "owner__gid","status__gid", "bus_end", "applicant", "docum_web_reference",
         "img_path", "owner__logo_path", "owner__ogrn", "organ_status_", "status__name"
     ],
     actions: [
