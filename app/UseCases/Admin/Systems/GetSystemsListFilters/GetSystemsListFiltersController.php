@@ -4,7 +4,7 @@ namespace App\UseCases\Admin\Systems\GetSystemsListFilters;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
-use App\UseCases\SystemsTranslator;
+use App\UseCases\Admin\Systems\shared\SystemsTranslator;
 
 class GetSystemsListFiltersController
 {

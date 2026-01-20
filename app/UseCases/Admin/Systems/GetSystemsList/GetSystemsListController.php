@@ -3,7 +3,7 @@
 namespace App\UseCases\Admin\Systems\GetSystemsList;
 
 use App\Models\CertSystem;
-use App\UseCases\Admin\Systems\GetSystemsList\shared\SystemsFilter;
+use App\UseCases\Admin\Systems\GetSystemsList\shared\SystemsFilters;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -23,7 +23,7 @@ class GetSystemsListController
         $result = $handler->execute(
             page: (int) ($request->page ?? 1),
             itemsPerPage: (int) ($request->perPage ?? 10),
-            filter: new SystemsFilter($request->all()),
+            filter: new SystemsFilters($request->all()),
             builder: $builder
         );
 

@@ -3,7 +3,7 @@
 namespace App\UseCases\Admin\Organs\GetOrgansList;
 
 use App\Models\Organ;
-use App\UseCases\Admin\Organs\GetOrgansList\shared\SystemsFilter;
+use App\UseCases\Admin\Organs\GetOrgansList\shared\OrgansFilters;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -22,7 +22,7 @@ class GetOrgansListController
         $result = $handler->execute(
             page: (int) ($request->page ?? 1),
             itemsPerPage: (int) ($request->perPage ?? 10),
-            filter: new SystemsFilter($request->all()),
+            filter: new OrgansFilters($request->all()),
             builder: $builder
         );
 

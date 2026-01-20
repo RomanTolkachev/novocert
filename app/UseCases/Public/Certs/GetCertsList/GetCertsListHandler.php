@@ -2,15 +2,15 @@
 
 namespace App\UseCases\Public\Certs\GetCertsList;
 
-use Illuminate\Database\Eloquent\Builder;
-use App\UseCases\Public\Certs\GetCertsList\shared\SystemsFilter;
+use Illuminate\\Database\\Eloquent\\Builder;
+use App\\UseCases\\Public\\Certs\\GetCertsList\\shared\\CertsFilters;
 
 class GetCertsListHandler
 {
     public function execute(
         int $page,
         int $itemsPerPage,
-        SystemsFilter $filter,
+        CertsFilters $filter,
         Builder $builder
     ): GetCertsListResource {
 

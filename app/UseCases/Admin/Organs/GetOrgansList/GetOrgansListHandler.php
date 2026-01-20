@@ -3,14 +3,14 @@
 namespace App\UseCases\Admin\Organs\GetOrgansList;
 
 use Illuminate\Database\Eloquent\Builder;
-use App\UseCases\Admin\Organs\GetOrgansList\shared\SystemsFilter;
+use App\UseCases\Admin\Organs\GetOrgansList\shared\OrgansFilters;
 
 class GetOrgansListHandler
 {
     public function execute(
         int $page,
         int $itemsPerPage,
-        SystemsFilter $filter,
+        OrgansFilters $filter,
         Builder $builder
     ): GetOrgansListResource {
 

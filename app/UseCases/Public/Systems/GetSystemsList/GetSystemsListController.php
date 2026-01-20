@@ -6,7 +6,7 @@ use App\Models\SystemView;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\UseCases\Public\Systems\GetSystemsList\shared\SystemsFilter;
+use App\UseCases\Public\Systems\GetSystemsList\shared\SystemsFilters;
 
 
 class GetSystemsListController
@@ -18,7 +18,7 @@ class GetSystemsListController
         $result = $handler->execute(
             page: (int)($request->page ?? 1),
             itemsPerPage: (int)($request->perPage ?? 10),
-            filter: new SystemsFilter($request->all()),
+            filter: new SystemsFilters($request->all()),
             builder: $builder
         );
 

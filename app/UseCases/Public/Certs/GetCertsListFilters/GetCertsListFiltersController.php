@@ -32,7 +32,7 @@ class GetCertsListFiltersController
                 'headerLabel' => 'regnum_sds',
                 'order' => 1,
                 'type' => 'text',
-                'headerLabelTranslate' => 'регистрационный номер СДС',
+                'headerLabelTranslate' => 'Регистрационный номер СДС',
                 'tooltip' => '',
             ],
             [

@@ -3,14 +3,14 @@
 namespace App\UseCases\Admin\Feedbacks\GetFeedbacksList;
 
 use Illuminate\Database\Eloquent\Builder;
-use App\UseCases\Admin\Feedbacks\GetFeedbacksList\shared\SystemsFilter;
+use App\UseCases\Admin\Feedbacks\GetFeedbacksList\shared\FeedbacksFilters;
 
 class GetFeedbacksListHandler
 {
     public function execute(
         int $page,
         int $itemsPerPage,
-        SystemsFilter $filter,
+        FeedbacksFilters $filter,
         Builder $builder
     ): GetFeedbacksListResource {
 

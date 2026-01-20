@@ -3,14 +3,14 @@
 namespace App\UseCases\Admin\Certs\GetCertsList;
 
 use Illuminate\Database\Eloquent\Builder;
-use App\UseCases\Admin\Certs\GetCertsList\shared\SystemsFilter;
+use App\UseCases\Admin\Certs\GetCertsList\shared\CertsFilters;
 
 class GetCertsListHandler
 {
     public function execute(
         int $page,
         int $itemsPerPage,
-        SystemsFilter $filter,
+        CertsFilters $filter,
         Builder $builder
     ): GetCertsListResource {
 

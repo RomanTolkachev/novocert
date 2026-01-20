@@ -4,7 +4,7 @@ namespace App\UseCases\Admin\Feedbacks\GetFeedbacksListFilters;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
-use App\UseCases\FeedbacksTranslator;
+use App\UseCases\Admin\Feedbacks\shared\FeedbacksTranslator;
 
 class GetFeedbacksListFiltersController
 {

@@ -28,6 +28,7 @@ class CreateUseCasePipeline extends Command
         $listName = "Get{$rootUc}List";
         $filtersName = "Get{$rootUc}ListFilters";
         $translatorClass = "{$rootUc}Translator";
+        $filterClass = "{$rootUc}Filters";
 
         // Base directory: app/UseCases/Admin/Systems
         $baseRoot = app_path("UseCases/{$subdirs}/{$rootUc}");
@@ -52,10 +53,10 @@ class CreateUseCasePipeline extends Command
         $nsRootShared = $this->getNamespace($rootShared);
 
         // Generate core list pipeline
-        $this->createListController($baseList, $listName, $nsList, $nsListShared, $modelClass);
-        $this->createListHandler($baseList, $listName, $nsList, $nsListShared);
+        $this->createListController($baseList, $listName, $nsList, $nsListShared, $filterClass, $modelClass);
+        $this->createListHandler($baseList, $listName, $nsList, $nsListShared, $filterClass);
         $this->createListResource($baseList, $listName, $nsList);
-        $this->createListSharedFilter($baseListShared);
+        $this->createListSharedFilter($baseListShared, $filterClass);
 
         // Translator
         $this->createTranslator($rootShared, $translatorClass, $nsRootShared);
@@ -66,6 +67,7 @@ class CreateUseCasePipeline extends Command
             $filtersName,
             $nsFilters,
             $translatorClass,
+            $nsRootShared,
             $modelClass
         );
 
@@ -84,7 +86,7 @@ class CreateUseCasePipeline extends Command
     }
 
     // ----------------------- LIST CONTROLLER -----------------------
-    protected function createListController($path, $class, $ns, $nsShared, $modelClass)
+    protected function createListController($path, $class, $ns, $nsShared, $filterClass, $modelClass)
     {
         $modelUse = $modelClass ? "use {$modelClass};" : '';
         $modelBase = $modelClass ? class_basename($modelClass) : '/* YourModel */';
@@ -93,10 +95,10 @@ class CreateUseCasePipeline extends Command
 
 namespace {$ns};
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use {$nsShared}\\SystemsFilter;
+use Illuminate\\Http\\JsonResponse;
+use Illuminate\\Http\\Request;
+use Illuminate\\Http\\Response;
+use {$nsShared}\\{$filterClass};
 {$modelUse}
 
 class {$class}Controller
@@ -108,7 +110,7 @@ class {$class}Controller
         \$result = \$handler->execute(
             page: (int)(\$request->page ?? 1),
             itemsPerPage: (int)(\$request->perPage ?? 10),
-            filter: new SystemsFilter(\$request->all()),
+            filter: new {$filterClass}(\$request->all()),
             builder: \$builder
         );
 
@@ -121,21 +123,21 @@ class {$class}Controller
     }
 
     // ----------------------- LIST HANDLER -----------------------
-    protected function createListHandler($path, $class, $ns, $nsShared)
+    protected function createListHandler($path, $class, $ns, $nsShared, $filterClass)
     {
         $content = "<?php
 
 namespace {$ns};
 
-use Illuminate\Database\Eloquent\Builder;
-use {$nsShared}\\SystemsFilter;
+use Illuminate\\Database\\Eloquent\\Builder;
+use {$nsShared}\\{$filterClass};
 
 class {$class}Handler
 {
     public function execute(
         int \$page,
         int \$itemsPerPage,
-        SystemsFilter \$filter,
+        {$filterClass} \$filter,
         Builder \$builder
     ): {$class}Resource {
 
@@ -200,7 +202,7 @@ class {$class}Resource extends JsonResource
     }
 
     // ----------------------- LIST SHARED FILTER -----------------------
-    protected function createListSharedFilter($baseListShared)
+    protected function createListSharedFilter($baseListShared, $filterClass)
     {
         $ns = $this->getNamespace($baseListShared);
 
@@ -208,9 +210,9 @@ class {$class}Resource extends JsonResource
 
 namespace {$ns};
 
-use App\Http\Abstract\AbstractFilter;
+use App\\Http\\Abstract\\AbstractFilter;
 
-class SystemsFilter extends AbstractFilter
+class {$filterClass} extends AbstractFilter
 {
     public function __construct(array \$inputs)
     {
@@ -219,8 +221,8 @@ class SystemsFilter extends AbstractFilter
 
     // protected string \$cacheColumn = '{table}.{column}'; // сюда вручную прописать модель и столбец
 }";
-        File::put("{$baseListShared}/SystemsFilter.php", $content);
-        $this->info('Created: SystemsFilter.php');
+        File::put("{$baseListShared}/{$filterClass}.php", $content);
+        $this->info("Created: {$filterClass}.php");
     }
 
     // ----------------------- TRANSLATOR -----------------------
@@ -243,7 +245,7 @@ class {$class} extends AbstractCheckboxTranslator
     }
 
     // ----------------------- FILTERS CONTROLLER -----------------------
-    protected function createFiltersController($path, $class, $namespace, $translator, $modelClass)
+    protected function createFiltersController($path, $class, $namespace, $translator, $translatorNamespace, $modelClass)
     {
         $modelBase = $modelClass ? class_basename($modelClass) : '/* Model */';
 
@@ -251,9 +253,9 @@ class {$class} extends AbstractCheckboxTranslator
 
 namespace {$namespace};
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Cache;
-use App\\UseCases\\{$translator};
+use Illuminate\\Http\\JsonResponse;
+use Illuminate\\Support\\Facades\\Cache;
+use {$translatorNamespace}\\{$translator};
 
 class {$class}Controller
 {

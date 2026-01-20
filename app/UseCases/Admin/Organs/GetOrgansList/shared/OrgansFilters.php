@@ -1,10 +1,10 @@
 <?php
 
-namespace App\UseCases\Public\Certs\GetCertsList\shared;
+namespace App\UseCases\Admin\Organs\GetOrgansList\shared;
 
 use App\Http\Abstract\AbstractFilter;
 
-class SystemsFilter extends AbstractFilter
+class OrgansFilters extends AbstractFilter
 {
     public function __construct(array $inputs)
     {

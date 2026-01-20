@@ -1,10 +1,10 @@
 <?php
 
-namespace App\UseCases\Public\Systems\GetSystemsList\shared;
+namespace App\UseCases\Admin\Certs\GetCertsList\shared;
 
 use App\Http\Abstract\AbstractFilter;
 
-class SystemsFilter extends AbstractFilter
+class CertsFilters extends AbstractFilter
 {
     public function __construct(array $inputs)
     {

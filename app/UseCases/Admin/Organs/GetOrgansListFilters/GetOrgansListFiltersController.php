@@ -4,7 +4,7 @@ namespace App\UseCases\Admin\Organs\GetOrgansListFilters;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
-use App\UseCases\OrgansTranslator;
+use App\UseCases\Admin\Organs\shared\OrgansTranslator;
 
 class GetOrgansListFiltersController
 {

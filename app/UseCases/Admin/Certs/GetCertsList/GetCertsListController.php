@@ -6,7 +6,7 @@ use App\Models\DocumentView;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\UseCases\Admin\Certs\GetCertsList\shared\SystemsFilter;
+use App\UseCases\Admin\Certs\GetCertsList\shared\CertsFilters;
 
 
 class GetCertsListController
@@ -20,7 +20,7 @@ class GetCertsListController
         $result = $handler->execute(
             page: (int)($request->page ?? 1),
             itemsPerPage: (int)($request->perPage ?? 10),
-            filter: new SystemsFilter($request->all()),
+            filter: new CertsFilters($request->all()),
             builder: $builder
         );
 

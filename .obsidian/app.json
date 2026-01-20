@@ -1,0 +1,6 @@
+{
+  "userIgnoreFilters": [
+    "vendor/",
+    "resources/js/node_modules/"
+  ]
+}

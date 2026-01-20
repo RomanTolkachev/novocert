@@ -1,10 +1,10 @@
 <?php
 
-namespace App\UseCases\Admin\Systems\GetSystemsList\shared;
+namespace App\UseCases\Admin\Feedbacks\GetFeedbacksList\shared;
 
 use App\Http\Abstract\AbstractFilter;
 
-class SystemsFilter extends AbstractFilter
+class FeedbacksFilters extends AbstractFilter
 {
     public function __construct(array $inputs)
     {

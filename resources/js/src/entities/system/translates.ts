@@ -9,8 +9,6 @@ export const translations: Record<keyof ISystem, string> = {
     applicant: "Заявитель",
     bus_begin: "Дата регистрации",
     bus_end: "Дата окончания действия (бизнес)",
-    tech_begin: "Дата начала действия (техническая)",
-    tech_end: "Дата окончания действия (техническая)",
     img_path: "Путь к изображению",
     organ_status_: "Статус органа сертификации",
     organs_count: "Количество органов сертификации",

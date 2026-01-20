@@ -3,14 +3,14 @@
 namespace App\UseCases\Public\Systems\GetSystemsList;
 
 use Illuminate\Database\Eloquent\Builder;
-use App\UseCases\Public\Systems\GetSystemsList\shared\SystemsFilter;
+use App\UseCases\Public\Systems\GetSystemsList\shared\SystemsFilters;
 
 class GetSystemsListHandler
 {
     public function execute(
         int $page,
         int $itemsPerPage,
-        SystemsFilter $filter,
+        SystemsFilters $filter,
         Builder $builder
     ): GetSystemsListResource {
 

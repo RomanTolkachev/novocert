@@ -4,7 +4,7 @@ namespace App\UseCases\Admin\Certs\GetCertsListFilters;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
-use App\UseCases\CertsTranslator;
+use App\UseCases\Admin\Certs\shared\CertsTranslator;
 
 class GetCertsListFiltersController
 {
