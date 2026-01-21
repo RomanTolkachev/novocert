@@ -1,4 +1,3 @@
-import TableCell from "@mui/material/TableCell";
 import { type CellContext } from "@tanstack/react-table";
 import { Box, IconButton } from "@mui/material";
 import type { ReactNode } from "react";
@@ -37,5 +36,5 @@ export const CustomTechCell = <T extends Record<string, any>>({
         );
     }
 
-    return <TableCell key={cellData.column.id}>-</TableCell>;
+    return '-';
 };

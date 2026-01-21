@@ -60,7 +60,7 @@ export const makeList = (
             <List sx={{ listStyle: showBullets ? 'disc' : 'none', pl: showBullets ? 2 : 0 }}>
                 <ListItem disablePadding sx={{ display: 'list-item' }}>
                     <ListItemText
-                        primary={<Typography  sx={liStyle}>{text}</Typography>}
+                        primary={<Typography variant="inherit" sx={liStyle}>{text}</Typography>}
                     />
                 </ListItem>
             </List>
@@ -99,7 +99,7 @@ export const makeList = (
                     <ListItem key={index} disablePadding sx={{ display: 'list-item' }}>
                         <ListItemText
                             primary={
-                                <Typography  sx={liStyle}>
+                                <Typography variant="inherit" sx={liStyle}>
                                     {highlightPattern ? highlight(part, highlightPattern) : part}
                                     {showDelim ? delimiter : ''}
                                 </Typography>
@@ -110,10 +110,10 @@ export const makeList = (
             })}
 
             {hiddenItemsCount > 0 && showMoreText && (
-                <ListItem disablePadding sx={{ display: 'list-item',  listStyle: 'none' }}>
+                <ListItem disablePadding sx={{ display: 'list-item', listStyle: 'none' }}>
                     <ListItemText
                         primary={
-                            <Typography  sx={{ ...liStyle, WebkitLineClamp: 1, opacity: 0.7 }}>
+                            <Typography variant="inherit" sx={{ ...liStyle, WebkitLineClamp: 1, opacity: 0.7 }}>
                                 {showMoreText === 'howMany'
                                     ? `... +${hiddenItemsCount} ${getElementWord(hiddenItemsCount)}`
                                     : showMoreText}

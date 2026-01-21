@@ -132,12 +132,11 @@ export const TableWithFilters = <T extends Record<string, any>>({
                             flexDirection: "column"
                         }}>
                             <FormControlLabel
-                                sx={{ flex: 0, pl: 2.5 }}
+                                sx={{ flex: 0, pl: 2.5, color: (theme) => theme.palette.text.secondary }}
                                 control={
                                     <Switch
                                         checked={tableSize === 'small'}
                                         onChange={handleSwitchChange}
-                                        color="primary"
                                     />
                                 }
                                 label="Компактный вид"

@@ -51,6 +51,10 @@ export const CustomTooltip: FC<TooltipProps> = ({
         maxHeight,
     });
 
+    // Поддерживаем тот же размер шрифта, что и у триггера (TableCell),
+    // чтобы small/medium отображались консистентно, несмотря на портал.
+    const [fontSize, setFontSize] = useState<string | undefined>(undefined);
+
     const internalTooltipRef = useRef<HTMLDivElement | null>(null);
     const combinedTooltipRef = tooltipRef || internalTooltipRef;
 
@@ -124,6 +128,11 @@ export const CustomTooltip: FC<TooltipProps> = ({
 
         const rect = trigger.getBoundingClientRect();
 
+        // Читаем реальный font-size триггера (ячейки таблицы),
+        // чтобы тултип использовал тот же размер шрифта.
+        const computed = window.getComputedStyle(trigger);
+        setFontSize(computed.fontSize);
+
         const vpCenterX = window.innerWidth / 2;
         const vpCenterY = window.innerHeight / 2;
 
@@ -185,7 +194,7 @@ export const CustomTooltip: FC<TooltipProps> = ({
         <Paper
             ref={combinedTooltipRef}
             className={className}
-            sx={{
+            sx={(theme) => ({
                 position: 'fixed',
                 zIndex: 1300,
                 top: position.top,
@@ -201,8 +210,9 @@ export const CustomTooltip: FC<TooltipProps> = ({
                 borderRadius: 2,
                 opacity: visible ? 1 : 0,
                 transform: visible ? 'scale(1)' : 'scale(0.95)',
-                transition: 'opacity .15s ease, transform .15s ease'
-            }}
+                transition: 'opacity .15s ease, transform .15s ease',
+                fontSize: fontSize ?? theme.typography.body2.fontSize,
+            })}
             onMouseEnter={handleShow}
             onMouseLeave={handleHide}
         >

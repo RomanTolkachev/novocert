@@ -1,9 +1,8 @@
 import { ASSETS_URL, CustomTooltip, highlight, makeList, SkeletonImage, useParamsCustom } from "@/shared";
-import TableCell from "@mui/material/TableCell";
 import { flexRender, type Cell, type Row } from "@tanstack/react-table";
 import { useRef, type ReactNode, type RefObject } from "react";
 import { ImageSmall, StatusIcon, TextWithImageCell } from "./cells";
-import { Link, Typography } from "@mui/material";
+import { Link, Typography, type TableProps } from "@mui/material";
 import type { ISystem } from "@/entities/system";
 import type { TColumns } from "@/entities";
 
@@ -14,6 +13,7 @@ type ColumnsQuery = Partial<Record<TColumns, string | string[]>> & {
 
 interface CustomCellProps<T extends Record<string, any>> {
     cellData: Cell<T, unknown>;
+    tableSize?: TableProps["size"];
 }
 
 type TStatusLiter = "N" | "A" | "L" | "PL" | "B" | "T" | "P" | "S" | "D" | undefined | null;
@@ -25,7 +25,7 @@ type TStatusLiter = "N" | "A" | "L" | "PL" | "B" | "T" | "P" | "S" | "D" | undef
  * @returns TableCell
  */
 export const CustomCell = <T extends Record<string, any>>({
-    cellData
+    cellData, tableSize
 }: CustomCellProps<T>): ReactNode => {
     const { getContext, id } = cellData;
     const context = getContext();
@@ -63,7 +63,7 @@ export const CustomCell = <T extends Record<string, any>>({
             if (value) {
                 return <ImageSmall path={`${ASSETS_URL}/${context.row.original.logo_path}`} />
             }
-            return <TableCell align="center" key={id}>-</TableCell>;
+            return '-';
 
         // case 'avatar':
         //     if (value) {
@@ -97,7 +97,7 @@ export const CustomCell = <T extends Record<string, any>>({
                 );
             }
 
-            return <TableCell align="center" key={id}>-</TableCell>;
+            return '-';
 
         case 'owner__short_name':
             if (value) {
@@ -111,26 +111,26 @@ export const CustomCell = <T extends Record<string, any>>({
                 );
             }
 
-            return <TableCell align="center" key={id}>-</TableCell>;
+            return '-';
 
         case 'owner__inn':
             if (value) {
-                const { original: { owner__ogrn } } = context.row as unknown as Row<ISystem>;
+                const { original: { owner__ogrn } } = context.row;
                 const { owner__inn, owner__ogrn: ogrn } = query;
                 return (
-                    <TableCell>
-                        <Typography>{highlight(value, owner__inn)} /<br /></Typography>
-                        <Typography>{highlight(owner__ogrn, ogrn)}</Typography>
-                    </TableCell>
+                    <>
+                        <Typography variant="inherit">{highlight(value, owner__inn)} /<br /></Typography>
+                        <Typography variant="inherit">{highlight(owner__ogrn, ogrn)}</Typography>
+                    </>
                 );
             }
 
-            return <TableCell align="center" key={id}>-</TableCell>;
+            return '-';
 
         case 'system_cert_number':
             if (value) {
                 const { system_cert_number } = query;
-                const { id, original: { status__gid } } = context.row as unknown as Row<ISystem>;
+                const { id, original: { status__gid } } = context.row;
                 return (
                     <TextWithImageCell
                         img_component={<StatusIcon status_liter={status__gid as TStatusLiter} />}
@@ -139,7 +139,7 @@ export const CustomCell = <T extends Record<string, any>>({
                 );
             }
 
-            return <TableCell align="center" key={id}>-</TableCell>;
+            return '-';
 
 
 
@@ -151,7 +151,7 @@ export const CustomCell = <T extends Record<string, any>>({
                 );
             }
 
-            return <TableCell align="center" key={id}>-</TableCell>;
+            return '-';
 
         case 'applicant__short_name':
             if (value) {
@@ -161,75 +161,77 @@ export const CustomCell = <T extends Record<string, any>>({
                 );
             }
 
-            return <TableCell align="center" key={id}>-</TableCell>;
+            return '-';
 
         case "accreditation":
             if (value) {
                 const accreditation = query.accreditation;
                 return (
-                    <TableCell ref={triggerRef} align="center" key={id}>
-                        {makeList(value, {
-                            delimiter: ";",
-                            maxLiItems: 3,
-                            maxLines: 3,
-                            showBullets: true,
-                            showMoreText: "howMany",
-                            highlightPattern: accreditation,
-                        }
-                        )}
+                    <>
+                        <span ref={triggerRef}>
+                            {makeList(value, {
+                                delimiter: ";",
+                                maxLiItems: tableSize === "small" ? 2 : 3,
+                                maxLines: tableSize === "small" ? 2 : 3,
+                                showBullets: true,
+                                showMoreText: "howMany",
+                                highlightPattern: accreditation,
+                            })}
+                        </span>
                         <CustomTooltip
                             distanceFromTrigger={-15}
                             triggerRef={triggerRef as RefObject<HTMLElement>}
                             content={makeList(value, { showBullets: true, delimiter: ";", highlightPattern: accreditation })} />
-                    </TableCell>
+                    </>
                 );
             }
-            return <TableCell align="center" key={id}>-</TableCell>;
+            return '-';
 
         case "organ_accreditation_scope":
             if (value) {
                 return (
-                    <TableCell ref={triggerRef} align="center" key={id}>
-                        {makeList(value, {
-                            delimiter: ";",
-                            maxLiItems: 3,
-                            maxLines: 3,
-                            showBullets: true,
-                            showMoreText: "howMany"
-                        }
-                        )}
+                    <>
+                        <span ref={triggerRef}>
+                            {makeList(value, {
+                                delimiter: ";",
+                                maxLiItems: 3,
+                                maxLines: 3,
+                                showBullets: true,
+                                showMoreText: "howMany",
+                            })}
+                        </span>
                         <CustomTooltip
                             distanceFromTrigger={-15}
                             triggerRef={triggerRef as RefObject<HTMLElement>}
                             content={makeList(value, { showBullets: true, delimiter: ";" })} />
-                    </TableCell>
+                    </>
                 );
             }
 
-            return <TableCell align="center" key={id}>-</TableCell>;
+            return '-';
 
         case "img_path":
             if (value) {
                 return (
-                    <TableCell ref={triggerRef} align="center" key={id}>
-                        <SkeletonImage src={`${ASSETS_URL}/${value}`} fit="contain" height={60} width={60} />
+                    <>
+                        <span ref={triggerRef}>
+                            <SkeletonImage src={`${ASSETS_URL}/${value}`} fit="contain" height={60} width={60} />
+                        </span>
                         <CustomTooltip
                             isImage
                             distanceFromTrigger={-50}
                             triggerRef={triggerRef as RefObject<HTMLElement>}
                             content={<SkeletonImage src={`${ASSETS_URL}/${value}`} fit="contain" height={300} width={300} />} />
-                    </TableCell>
+                    </>
                 );
             }
 
-            return <TableCell align="center" key={id}>-</TableCell>;
+            return '-';
 
         case "organ_status_": {
             const statusTitle = context.row.original.status__name;
             return (
-                <TableCell align="center" key={id}>
-                    <StatusIcon title={statusTitle} status_liter={value as any} />
-                </TableCell>
+                <StatusIcon title={statusTitle} status_liter={value as any} />
             )
         }
 
@@ -257,10 +259,6 @@ export const CustomCell = <T extends Record<string, any>>({
         }
 
         default:
-            return (
-                <TableCell align="center" key={id}>
-                    {flexRender(cellData.column.columnDef.cell, context)}
-                </TableCell>
-            )
+            return flexRender(cellData.column.columnDef.cell, context)
     }
 };

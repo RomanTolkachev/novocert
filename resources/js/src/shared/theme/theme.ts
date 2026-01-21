@@ -7,17 +7,46 @@ import ubuntuBold from "@public/fonts/Ubuntu-Bold.ttf" // 700
 
 export const theme = createTheme({
     colorSchemes: {
-        dark: true
+        light: {
+        },
+        dark: {
+            palette: {
+                primary: { main: '#90caf9' },
+                background: {
+                    default: '#121212',
+                },
+                text: {
+                    // основной серый цвет текста
+                    primary: '#b0b0b0',
+                    secondary: '#7a7a7a',
+                },
+                // всякие иконки и т.д
+                action: {
+                    active: '#b0b0b0',
+                    hover: 'rgba(176, 176, 176, 0.08)',
+                    selected: 'rgba(176, 176, 176, 0.16)',
+                    disabled: 'rgba(176, 176, 176, 0.3)',
+                    disabledBackground: 'rgba(176, 176, 176, 0.12)',
+                },
+            },
+        },
     },
     cssVariables: {
         colorSchemeSelector: 'data-mui-color-scheme',
     },
+    shape: {
+        borderRadius: 8,
+    },
     typography: {
         fontFamily: 'Ubuntu, Arial',
-        fontSize: 14,
+        fontSize: 16,
         body1: {
             fontSize: '0.875rem',
             lineHeight: 1.43,
+        },
+        body2: {
+            fontSize: '0.8125rem',
+            lineHeight: 1.5,
         },
 
     },
@@ -32,29 +61,34 @@ export const theme = createTheme({
         },
         MuiTableCell: {
             styleOverrides: {
-                body: {
+                body: ({ ownerState, theme }) => ({
                     fontWeight: 400,
-                    // padding: 8
-                },
-                head: {
-                    // padding: 8
-                }
-            },
-        },
-        MuiButton: {
-            styleOverrides: {
-                root: {
-                    borderRadius: 8,
-                },
-                contained: {
-                    borderRadius: 8,
-                },
-                outlined: {
-                    borderRadius: 8,
-                },
-                text: {
-                    borderRadius: 8,
-                },
+                    ...(ownerState.size === 'medium' && {
+                        fontSize: theme.typography.body1.fontSize,
+                    }),
+                    ...(ownerState.size === 'small' && {
+                        fontSize: theme.typography.body2.fontSize,
+                        paddingTop: 4,
+                        paddingBottom: 4,
+                        paddingLeft: 8,
+                        paddingRight: 8,
+                    }),
+                }),
+                head: ({ ownerState, theme }) => ({
+                    ...(ownerState.size === 'medium' && {
+                        fontSize: theme.typography.body1.fontSize,
+                        lineHeight: theme.typography.body1.lineHeight,
+
+                    }),
+                    ...(ownerState.size === 'small' && {
+                        fontSize: theme.typography.body2.fontSize,
+                        lineHeight: theme.typography.body1.lineHeight,
+                        paddingTop: 6,
+                        paddingBottom: 6,
+                        paddingLeft: 8,
+                        paddingRight: 8,
+                    }),
+                }),
             },
         },
         MuiButtonBase: {

@@ -123,7 +123,9 @@ export function CustomTable<T extends Record<string, any>>({
                                     }}
                                 >
                                     {row.getVisibleCells().map(cell => (
-                                        <CustomCell key={cell.id} cellData={cell} />
+                                        <TableCell align="center" key={cell.id}>
+                                            <CustomCell tableSize={size} cellData={cell} />
+                                        </TableCell>
                                     ))}
                                 </TableRow>
                             ))}
