@@ -38,6 +38,10 @@ use App\UseCases\Public\Systems\{
     GetSystemsList\GetSystemsListController as GetPublicSystemsListController,
     GetSystemsListFilters\GetSystemsListFiltersController as GetPublicSystemsListFiltersController,
 };
+use App\UseCases\Public\Organs\{
+    GetOrgansList\GetOrgansListController as GetPublicOrgansListController,
+    GetOrgansListFilters\GetOrgansListFiltersController as GetPublicOrgansListFiltersController,
+};
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->middleware('api')->group(function () {
@@ -52,6 +56,9 @@ Route::prefix('auth')->middleware('api')->group(function () {
 Route::prefix("public")->group(function () {
     Route::get("get-systems-list", GetPublicSystemsListController::class);
     Route::get("get-systems-list-filters", GetPublicSystemsListFiltersController::class);
+
+    Route::get("get-organs-list", GetPublicOrgansListController::class);
+    Route::get("get-organs-list-filters", GetPublicOrgansListFiltersController::class);
 });
 
 Route::prefix("admin")->middleware('auth:jwt')->group(function () {

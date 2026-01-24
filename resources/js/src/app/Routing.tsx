@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Route, Routes } from "react-router-dom";
 import { OnlyAuth, RoleGuard } from "./AuthProvider";
-import { Certs, CertSystemsPage, Companies, Feedbacks, Organs, PersonalPage, SaPersonalPage, Systems, Users } from "@/pages";
+import { Certs, CertSystemsPage, Companies, Feedbacks, Organs, OrgansPage, PersonalPage, SaPersonalPage, Systems, Users } from "@/pages";
 import { Bio } from "@/widgets";
 
 
@@ -10,7 +10,7 @@ export const Routing: FC = () => {
         <Routes>
             <Route path="/" element={<>главная</>} />
             <Route path="cert_systems" element={<CertSystemsPage />} />
-            <Route path="cert_authorities" element={<>органы по сертификации</>} />
+            <Route path="organs" element={<OrgansPage />} />
             <Route path="certs" element={<>сертификаты</>} />
             <Route path="docs" element={<>документы</>} />
             <Route path="companies" element={<>компании</>} />

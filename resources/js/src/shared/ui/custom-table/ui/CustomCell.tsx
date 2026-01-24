@@ -5,6 +5,7 @@ import { ImageSmall, StatusIcon, TextWithImageCell } from "./cells";
 import { Link, Typography, type TableProps } from "@mui/material";
 import type { ISystem } from "@/entities/system";
 import type { TColumns } from "@/entities";
+import type { IOrgan } from "@/entities/organ";
 
 type ColumnsQuery = Partial<Record<TColumns, string | string[]>> & {
     page?: string;
@@ -18,16 +19,10 @@ interface CustomCellProps<T extends Record<string, any>> {
 
 type TStatusLiter = "N" | "A" | "L" | "PL" | "B" | "T" | "P" | "S" | "D" | undefined | null;
 
-/**
- * должна возвращать TableCell. К сожалению не нашел как тайпскриптом проверить
- * возвращаемый тип именно TableCell, поэтому следим глазами
- * @param cellData Cell<T, unknown>
- * @returns TableCell
- */
 export const CustomCell = <T extends Record<string, any>>({
     cellData, tableSize
 }: CustomCellProps<T>): ReactNode => {
-    const { getContext, id } = cellData;
+    const { getContext } = cellData;
     const context = getContext();
     const value = context.getValue() as string;
     const columnId = context.column.id as keyof T;
@@ -52,10 +47,20 @@ export const CustomCell = <T extends Record<string, any>>({
             );
         }
 
+        // cert sysems
         case "organ__name": {
             const { id, original: { organ__status } } = context.row;
             return (
                 <TextWithImageCell id={id} text={value} img_component={<StatusIcon status_liter={organ__status} />} />
+            );
+        }
+
+        // organs
+        case "organ_name": {
+            const { id, original: { legal_logo_path
+            } } = context.row;
+            return (
+                <TextWithImageCell id={id} text={value} img_path={legal_logo_path} />
             );
         }
 
@@ -81,13 +86,22 @@ export const CustomCell = <T extends Record<string, any>>({
 
         //     return <TableCell align="center" key={id}>-</TableCell>;
 
+        // case "type__cert_system_name": {
+        //     const { id, original: { type__img_path } } = context.row;
+
+        //     return (
+        //         <TextWithImageCell id={id} text={value} img_path={type__img_path} />
+        //     );
+        // }
+
+        // ячейка в 2 таблицах, системы и органы, поэтому через ??
         case 'system_name':
             if (value) {
-                const { id, original: { docum_web_reference, img_path } } = context.row as unknown as Row<ISystem>;
+                const { id, original: { docum_web_reference, img_path, system_img_path } } = context.row;
                 const system_name = query.system_name;
                 return (
                     <TextWithImageCell
-                        img_path={img_path}
+                        img_path={img_path ?? system_img_path}
                         id={id}
                         text={
                             <Link target="_blank" rel="noreferrer" href={docum_web_reference} color="inherit">
@@ -98,6 +112,8 @@ export const CustomCell = <T extends Record<string, any>>({
             }
 
             return '-';
+
+        // case 'organ_number'
 
         case 'owner__short_name':
             if (value) {
@@ -113,27 +129,29 @@ export const CustomCell = <T extends Record<string, any>>({
 
             return '-';
 
+        case 'legal_inn':
         case 'owner__inn':
             if (value) {
-                const { original: { owner__ogrn } } = context.row;
+                const { original: { owner__ogrn, legal_ogrn } } = context.row;
                 const { owner__inn, owner__ogrn: ogrn } = query;
                 return (
                     <>
                         <Typography variant="inherit">{highlight(value, owner__inn)} /<br /></Typography>
-                        <Typography variant="inherit">{highlight(owner__ogrn, ogrn)}</Typography>
+                        <Typography variant="inherit">{highlight(owner__ogrn ?? legal_ogrn, ogrn)}</Typography>
                     </>
                 );
             }
 
             return '-';
 
+        case 'organ_number':
         case 'system_cert_number':
             if (value) {
                 const { system_cert_number } = query;
-                const { id, original: { status__gid } } = context.row;
+                const { id, original: { status__gid, organ_status_ } } = context.row;
                 return (
                     <TextWithImageCell
-                        img_component={<StatusIcon status_liter={status__gid as TStatusLiter} />}
+                        img_component={<StatusIcon status_liter={status__gid ?? organ_status_ as TStatusLiter} />}
                         id={id}
                         text={highlight(value, system_cert_number)} />
                 );
@@ -153,11 +171,12 @@ export const CustomCell = <T extends Record<string, any>>({
 
             return '-';
 
+        case 'legal_short_name':
         case 'applicant__short_name':
             if (value) {
-                const { id, original: { applicant__logo } } = context.row;
+                const { id, original: { applicant__logo, legal_logo_path } } = context.row;
                 return (
-                    <TextWithImageCell id={id} text={value} img_path={applicant__logo} />
+                    <TextWithImageCell id={id} text={value} img_path={applicant__logo ?? legal_logo_path} />
                 );
             }
 
@@ -239,14 +258,6 @@ export const CustomCell = <T extends Record<string, any>>({
             const { id, original: { system__img } } = context.row;
             return (
                 <TextWithImageCell id={id} text={value} img_path={system__img} />
-            );
-        }
-
-        case "type__cert_system_name": {
-            const { id, original: { type__img_path } } = context.row;
-
-            return (
-                <TextWithImageCell id={id} text={value} img_path={type__img_path} />
             );
         }
 

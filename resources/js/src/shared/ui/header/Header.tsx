@@ -17,10 +17,8 @@ type TabItem = {
 const tabs: TabItem[] = [
     { index: 0, label: "Главная", href: "/" },
     { index: 1, label: "Системы сертификации", href: "/cert_systems" },
-    { index: 2, label: "Органы по сертификации", href: "/cert_authorities" },
+    { index: 2, label: "Органы по сертификации", href: "/organs" },
     { index: 3, label: "Сертификаты", href: "/certs" },
-    // { index: 4, label: "Свидетельства", href: "/svidetelstva" },
-    // { index: 5, label: "Аттестаты", href: "/attestaty" },
     { index: 4, label: "Документы", href: "/docs" },
     { index: 5, label: "Компании", href: "/companies" },
     { index: 6, label: "Справочники", href: "/dictionaries" },
