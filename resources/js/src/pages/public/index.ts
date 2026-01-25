@@ -1,2 +1,4 @@
 export { CertSystemsPage } from "./cert_systems"
 export { OrgansPage } from "./organs"
+export { CertsPage } from "./certs"
+export { DocsPage } from "./docs"

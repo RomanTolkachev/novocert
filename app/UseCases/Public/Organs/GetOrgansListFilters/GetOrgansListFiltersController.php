@@ -3,11 +3,25 @@
 namespace App\UseCases\Public\Organs\GetOrgansListFilters;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Cache;
+use App\Models\OrganView;
+use App\UseCases\Public\Organs\shared\OrgansTranslator;
 
 class GetOrgansListFiltersController
 {
     public function __invoke(): JsonResponse
     {
+        $rawStatuses = Cache::remember('distinct_organs_view_organ_status_', 86400, function () {
+            return OrganView::query()
+                ->select('organ_status_')
+                ->whereNotNull('organ_status_')
+                ->distinct()
+                ->pluck('organ_status_')
+                ->toArray();
+        });
+
+        $translatedStatuses = OrgansTranslator::translate($rawStatuses);
+
         $filters = [
             [
                 'defaultValue' => '',
@@ -50,9 +64,18 @@ class GetOrgansListFiltersController
                 'tooltip' => '',
             ],
             [
+                'defaultValue' => [],
+                'headerLabel' => 'organ_status',
+                'order' => 6,
+                'type' => 'checkbox',
+                'values' => $translatedStatuses,
+                'headerLabelTranslate' => 'Статус аттестата ОС',
+                'tooltip' => '',
+            ],
+            [
                 'defaultValue' => '',
                 'headerLabel' => 'legal_short_name',
-                'order' => 6,
+                'order' => 7,
                 'type' => 'text',
                 'headerLabelTranslate' => 'Заявитель / владелец ОС',
                 'tooltip' => '',
@@ -60,7 +83,7 @@ class GetOrgansListFiltersController
             [
                 'defaultValue' => '',
                 'headerLabel' => 'legal_ogrn',
-                'order' => 7,
+'order' => 8,
                 'type' => 'text',
                 'headerLabelTranslate' => 'ОГРН заявителя',
                 'tooltip' => '',
@@ -68,7 +91,7 @@ class GetOrgansListFiltersController
             [
                 'defaultValue' => '',
                 'headerLabel' => 'legal_inn',
-                'order' => 8,
+'order' => 9,
                 'type' => 'text',
                 'headerLabelTranslate' => 'ИНН заявителя',
                 'tooltip' => '',

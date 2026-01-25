@@ -1,0 +1,25 @@
+import type { IDoc } from "./model";
+
+export const translations: Record<keyof IDoc, string> = {
+    fb_gid: "ID",
+    fb_name: "Наименование документа",
+    fb_bus_begin: "Дата регистрации",
+    fb_bus_end: "Дата окончания",
+    fb_doc_reg_num: "Регистрационный номер",
+    fb_docum_text: "Текст документа",
+    fb_img_path: "Скан документа",
+    fb_logo_path: "Логотип",
+    organ_status_liter: "Статус органа",
+    docum_type_gid: "Тип документа (ID)",
+    docum_type_name: "Тип документа",
+    from_gid: "От кого (ID)",
+    from_inn: "От кого (ИНН)",
+    from_ogrn: "От кого (ОГРН)",
+    from_short_name: "От кого",
+    from_logo_path: "Логотип отправителя",
+    to_short_name: "Кому",
+    to_inn: "Кому (ИНН)",
+    to_ogrn: "Кому (ОГРН)",
+    to_logo_path: "Логотип получателя",
+    to_gid: "Кому (ID)",
+};

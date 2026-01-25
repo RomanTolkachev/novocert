@@ -4,22 +4,24 @@ namespace App\UseCases\Public\Systems\GetSystemsListFilters;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
+use App\Models\SystemView;
 use App\UseCases\Public\Systems\shared\SystemsTranslator;
 
 class GetSystemsListFiltersController
 {
     public function __invoke()
     {
+        // distinct коды статусов из представления systems_view, кэшируем на сутки
+        $rawStatuses = Cache::remember('distinct_systems_view_organ_status_', 86400, function () {
+            return SystemView::query()
+                ->select('organ_status_')
+                ->whereNotNull('organ_status_')
+                ->distinct()
+                ->pluck('organ_status_')
+                ->toArray();
+        });
 
-        // $translated = SystemsTranslator::translate(
-        //     Cache::remember('distinct_/* Model */_example', 86400, function () {
-        //         return /* Model */::query()
-        //             ->select('example_column') // поменять вручную
-        //             ->distinct()
-        //             ->pluck('example_column')
-        //             ->toArray();
-        //     })
-        // );
+        $translatedStatuses = SystemsTranslator::translate($rawStatuses);
 
         $filters = [
 
@@ -74,10 +76,11 @@ class GetSystemsListFiltersController
                 'tooltip' => '',
             ],
             [
-                'defaultValue' => '',
+                'defaultValue' => [],
                 'headerLabel' => 'status__name',
                 'order' => 6,
                 'type' => 'checkbox',
+                'values' => $translatedStatuses,
                 'headerLabelTranslate' => 'Состояние аттестата ОС',
                 'tooltip' => '',
             ],

@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Route, Routes } from "react-router-dom";
 import { OnlyAuth, RoleGuard } from "./AuthProvider";
-import { Certs, CertSystemsPage, Companies, Feedbacks, Organs, OrgansPage, PersonalPage, SaPersonalPage, Systems, Users } from "@/pages";
+import { Certs, CertSystemsPage, CertsPage, Companies, DocsPage, Feedbacks, Organs, OrgansPage, PersonalPage, SaPersonalPage, Systems, Users } from "@/pages";
 import { Bio } from "@/widgets";
 
 
@@ -11,8 +11,8 @@ export const Routing: FC = () => {
             <Route path="/" element={<>главная</>} />
             <Route path="cert_systems" element={<CertSystemsPage />} />
             <Route path="organs" element={<OrgansPage />} />
-            <Route path="certs" element={<>сертификаты</>} />
-            <Route path="docs" element={<>документы</>} />
+            <Route path="certs" element={<CertsPage />} />
+            <Route path="docs" element={<DocsPage />} />
             <Route path="companies" element={<>компании</>} />
             <Route path="dictionaries" element={<>справочники</>} />
             <Route

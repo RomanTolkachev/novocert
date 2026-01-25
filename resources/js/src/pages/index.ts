@@ -10,4 +10,4 @@ export {
     Users
 } from "./personal"
 
-export { CertSystemsPage, OrgansPage } from "./public"
+export { CertSystemsPage, OrgansPage, CertsPage, DocsPage } from "./public"

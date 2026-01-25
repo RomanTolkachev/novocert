@@ -2,8 +2,8 @@
 
 namespace App\UseCases\Public\Certs\GetCertsList;
 
-use Illuminate\\Database\\Eloquent\\Builder;
-use App\\UseCases\\Public\\Certs\\GetCertsList\\shared\\CertsFilters;
+use Illuminate\Database\Eloquent\Builder;
+use App\UseCases\Public\Certs\GetCertsList\shared\CertsFilters;
 
 class GetCertsListHandler
 {

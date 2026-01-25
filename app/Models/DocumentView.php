@@ -15,5 +15,4 @@ class DocumentView extends Model
 
     protected $table = 'documents_view';
 
-    // const CREATED_AT = 'tech_create';
 }

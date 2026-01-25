@@ -1,23 +1,23 @@
 <?php
 
-namespace App\UseCases\Public\Certs\GetCertsList;
+namespace App\UseCases\Public\Docs\GetDocsList;
 
-use App\Models\DocumentView;
+use App\Models\FeedbackView;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\UseCases\Public\Certs\GetCertsList\shared\CertsFilters;
+use App\UseCases\Public\Docs\GetDocsList\shared\DocsFilters;
 
-class GetCertsListController
+class GetDocsListController
 {
-    public function __invoke(GetCertsListHandler $handler, Request $request): JsonResponse
+    public function __invoke(GetDocsListHandler $handler, Request $request): JsonResponse
     {
-        $builder = DocumentView::query();
+        $builder = FeedbackView::query();
 
         $result = $handler->execute(
             page: (int)($request->page ?? 1),
             itemsPerPage: (int)($request->perPage ?? 10),
-            filter: new CertsFilters($request->all()),
+            filter: new DocsFilters($request->all()),
             builder: $builder
         );
 

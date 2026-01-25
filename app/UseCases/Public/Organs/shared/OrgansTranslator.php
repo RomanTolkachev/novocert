@@ -1,10 +1,10 @@
 <?php
 
-namespace App\UseCases\Public\Systems\shared;
+namespace App\UseCases\Public\Organs\shared;
 
 use App\Http\Abstract\AbstractCheckboxTranslator;
 
-class SystemsTranslator extends AbstractCheckboxTranslator
+class OrgansTranslator extends AbstractCheckboxTranslator
 {
     protected static array $translations = self::STATUS_TRANSLATIONS;
 }

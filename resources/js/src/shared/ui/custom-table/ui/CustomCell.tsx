@@ -1,11 +1,12 @@
 import { ASSETS_URL, CustomTooltip, highlight, makeList, SkeletonImage, useParamsCustom } from "@/shared";
 import { flexRender, type Cell, type Row } from "@tanstack/react-table";
 import { useRef, type ReactNode, type RefObject } from "react";
-import { ImageSmall, StatusIcon, TextWithImageCell } from "./cells";
-import { Link, Typography, type TableProps } from "@mui/material";
+import { ImageSmall, StatusIcon, TextWithImageCell, DownloadPDF } from "./cells";
+import { IconButton, Link, Typography, type TableProps } from "@mui/material";
+import DownloadIcon from "@mui/icons-material/Download";
 import type { ISystem } from "@/entities/system";
 import type { TColumns } from "@/entities";
-import type { IOrgan } from "@/entities/organ";
+import { NoPhoto } from "../../svg";
 
 type ColumnsQuery = Partial<Record<TColumns, string | string[]>> & {
     page?: string;
@@ -40,25 +41,33 @@ export const CustomCell = <T extends Record<string, any>>({
             );
         }
 
+        case "fb_name": {
+            const { id, original: { organ_status_liter } } = context.row;
+            return (
+                <TextWithImageCell id={id} text={highlight(value, query.fb_name)} img_component={<StatusIcon status_liter={organ_status_liter} />} />
+            );
+        }
+
         case "cert__name": {
             const { id, original: { cert__status } } = context.row;
+            let pattern = query.cert__name
             return (
-                <TextWithImageCell id={id} text={value} img_component={<StatusIcon status_liter={cert__status} />} />
+                <TextWithImageCell id={id} text={highlight(value, pattern)} img_component={<StatusIcon status_liter={cert__status} />} />
             );
         }
 
         // cert sysems
         case "organ__name": {
             const { id, original: { organ__status } } = context.row;
+            let pattern = query.organ__name;
             return (
-                <TextWithImageCell id={id} text={value} img_component={<StatusIcon status_liter={organ__status} />} />
+                <TextWithImageCell id={id} text={highlight(value, pattern)} img_component={<StatusIcon status_liter={organ__status} />} />
             );
         }
 
         // organs
         case "organ_name": {
-            const { id, original: { legal_logo_path
-            } } = context.row;
+            const { id, original: { legal_logo_path } } = context.row;
             return (
                 <TextWithImageCell id={id} text={value} img_path={legal_logo_path} />
             );
@@ -159,7 +168,68 @@ export const CustomCell = <T extends Record<string, any>>({
 
             return '-';
 
+        case "fb_img_path": {
+            const { original: { fb_logo_path } } = context.row;
+            const path = (value as string) || fb_logo_path;
 
+            if (!path) {
+                return <div style={{ height: "45px", width: "45px", margin: "0 auto" }}><NoPhoto /></div>;
+            }
+
+            const isPdf = path.toLowerCase().endsWith(".pdf");
+            const downloadUrl = `${ASSETS_URL}/${path}`;
+
+            if (isPdf) {
+                return <DownloadPDF downloadUrl={downloadUrl} />;
+            }
+
+            const previewUrl = downloadUrl;
+
+            return (
+                <div style={{ display: "flex", alignItems: "center", gap: 8, justifyContent: "center" }}>
+                    <span ref={triggerRef}>
+                        <SkeletonImage src={previewUrl} fit="contain" height={60} width={60} />
+                    </span>
+                    <CustomTooltip
+                        isImage
+                        distanceFromTrigger={-50}
+                        triggerRef={triggerRef as RefObject<HTMLElement>}
+                        content={
+                            <SkeletonImage src={previewUrl} fit="contain" height={300} width={300} />
+                        }
+                    />
+
+                    <IconButton
+                        component="a"
+                        href={downloadUrl}
+                        download
+                        size="small"
+                        sx={{ ml: 0.5 }}
+                    >
+                        <DownloadIcon fontSize="small" />
+                    </IconButton>
+                </div>
+            );
+        }
+
+
+        case "from_short_name":
+            if (value) {
+                const { id, original: { from_logo_path } } = context.row;
+                return (
+                    <TextWithImageCell id={id} text={highlight(value, query.from_short_name)} img_path={from_logo_path} />
+                );
+            }
+            return '-';
+
+        case "to_short_name":
+            if (value) {
+                const { id, original: { to_logo_path } } = context.row;
+                return (
+                    <TextWithImageCell id={id} text={highlight(value, query.to_short_name)} img_path={to_logo_path} />
+                );
+            }
+            return '-';
 
         case 'cert__name':
             if (value) {
@@ -173,10 +243,11 @@ export const CustomCell = <T extends Record<string, any>>({
 
         case 'legal_short_name':
         case 'applicant__short_name':
+            let pattern = query.applicant__short_name ?? query.legal_short_name
             if (value) {
                 const { id, original: { applicant__logo, legal_logo_path } } = context.row;
                 return (
-                    <TextWithImageCell id={id} text={value} img_path={applicant__logo ?? legal_logo_path} />
+                    <TextWithImageCell id={id} text={highlight(value, pattern)} img_path={applicant__logo ?? legal_logo_path} />
                 );
             }
 
@@ -256,8 +327,9 @@ export const CustomCell = <T extends Record<string, any>>({
 
         case "system__name": {
             const { id, original: { system__img } } = context.row;
+            let pattern = query.system__name;
             return (
-                <TextWithImageCell id={id} text={value} img_path={system__img} />
+                <TextWithImageCell id={id} text={highlight(value, pattern)} img_path={system__img} />
             );
         }
 

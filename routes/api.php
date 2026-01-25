@@ -42,6 +42,15 @@ use App\UseCases\Public\Organs\{
     GetOrgansList\GetOrgansListController as GetPublicOrgansListController,
     GetOrgansListFilters\GetOrgansListFiltersController as GetPublicOrgansListFiltersController,
 };
+use App\UseCases\Public\Certs\{
+    GetCertsList\GetCertsListController as GetPublicCertsListController,
+    GetCertsListFilters\GetCertsListFiltersController as GetPublicCertsListFiltersController,
+};
+use App\UseCases\Public\Docs\{
+    GetDocsList\GetDocsListController as GetPublicDocsListController,
+    GetDocsListFilters\GetDocsListFiltersController as GetPublicDocsListFiltersController,
+};
+
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->middleware('api')->group(function () {
@@ -59,6 +68,12 @@ Route::prefix("public")->group(function () {
 
     Route::get("get-organs-list", GetPublicOrgansListController::class);
     Route::get("get-organs-list-filters", GetPublicOrgansListFiltersController::class);
+
+    Route::get("get-certs-list", GetPublicCertsListController::class);
+    Route::get("get-certs-list-filters", GetPublicCertsListFiltersController::class);
+
+    Route::get("get-docs-list", GetPublicDocsListController::class);
+    Route::get("get-docs-list-filters", GetPublicDocsListFiltersController::class);
 });
 
 Route::prefix("admin")->middleware('auth:jwt')->group(function () {

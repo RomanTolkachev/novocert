@@ -6,7 +6,5 @@ use App\Http\Abstract\AbstractCheckboxTranslator;
 
 class CertsTranslator extends AbstractCheckboxTranslator
 {
-    protected static array $translations = [
-        // 'raw_value' => 'Перевод' — слева сырое значение из БД, справа перевод
-    ];
+    protected static array $translations = self::STATUS_TRANSLATIONS;
 }
