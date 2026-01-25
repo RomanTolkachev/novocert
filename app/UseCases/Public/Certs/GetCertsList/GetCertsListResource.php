@@ -4,13 +4,20 @@ namespace App\UseCases\Public\Certs\GetCertsList;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Http\Resources\Traits\FormatsDates;
 
 class GetCertsListResource extends JsonResource
 {
+    use FormatsDates;
+
+    protected array $dateFields = [
+        'cert__bus_begin',
+    ];
+
     public function toArray($request): array
     {
         if ($this->resource instanceof LengthAwarePaginator) {
-            $p = $this->resource;
+            $p = $this->formatDatesOnPaginator($this->resource);
 
             return [
                 'data' => $p->items(),
@@ -31,6 +38,8 @@ class GetCertsListResource extends JsonResource
             ];
         }
 
-        return is_array($this->resource) ? $this->resource : (array) $this->resource;
+        $row = is_array($this->resource) ? $this->resource : (array) $this->resource;
+
+        return $this->formatDatesOnArray($row);
     }
 }

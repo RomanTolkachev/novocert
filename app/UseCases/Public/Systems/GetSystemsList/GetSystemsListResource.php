@@ -4,13 +4,21 @@ namespace App\UseCases\Public\Systems\GetSystemsList;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Http\Resources\Traits\FormatsDates;
 
 class GetSystemsListResource extends JsonResource
 {
+    use FormatsDates;
+
+    protected array $dateFields = [
+        'bus_begin',
+        'bus_end',
+    ];
+
     public function toArray($request): array
     {
         if ($this->resource instanceof LengthAwarePaginator) {
-            $p = $this->resource;
+            $p = $this->formatDatesOnPaginator($this->resource);
 
             return [
                 'data' => $p->items(),
@@ -31,6 +39,8 @@ class GetSystemsListResource extends JsonResource
             ];
         }
 
-        return is_array($this->resource) ? $this->resource : (array) $this->resource;
+        $row = is_array($this->resource) ? $this->resource : (array) $this->resource;
+
+        return $this->formatDatesOnArray($row);
     }
 }

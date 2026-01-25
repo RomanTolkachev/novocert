@@ -4,13 +4,20 @@ namespace App\UseCases\Public\Companies\GetCompaniesList;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Http\Resources\Traits\FormatsDates;
 
 class GetCompaniesListResource extends JsonResource
 {
+    use FormatsDates;
+
+    protected array $dateFields = [
+        'company_liquidation_date',
+    ];
+
     public function toArray($request): array
     {
         if ($this->resource instanceof LengthAwarePaginator) {
-            $p = $this->resource;
+            $p = $this->formatDatesOnPaginator($this->resource);
 
             return [
                 'data' => $p->items(),
@@ -22,15 +29,11 @@ class GetCompaniesListResource extends JsonResource
                     'to'          => $p->lastItem(),
                     'total'       => $p->total(),
                 ],
-                'links' => [
-                    'first' => $p->url(1),
-                    'last'  => $p->url($p->lastPage()),
-                    'prev'  => $p->previousPageUrl(),
-                    'next'  => $p->nextPageUrl(),
-                ],
             ];
         }
 
-        return is_array($this->resource) ? $this->resource : (array) $this->resource;
+        $row = is_array($this->resource) ? $this->resource : (array) $this->resource;
+
+        return $this->formatDatesOnArray($row);
     }
 }

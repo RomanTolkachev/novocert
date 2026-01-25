@@ -5,7 +5,7 @@ import { use, type FC } from "react";
 import type { ICustomSubmitHandlerContext } from "../../model";
 import { CustomSubmitHandlerContext } from "../../api/CustomFormProvider";
 import { useFormContext } from "react-hook-form";
-import { Button, Divider } from "@mui/material";
+import { Button, Divider, Typography } from "@mui/material";
 import { useFormChanges } from "../../lib";
 import { CheckBoxInput } from "../input-checkbox";
 import { DateRangeInput } from "../input-date";
@@ -113,10 +113,9 @@ export const FiltersList: FC = () => {
                         sx={{ minHeight: 0 }}
                         disabled={!isDirty}
                         type="submit"
-                        // onClick={() => filterContext.customSubmitHandler(getValues())}
                         variant="contained"
                     >
-                        применить
+                        <Typography>применить</Typography>
                     </Button>
 
                     <Button
@@ -126,7 +125,7 @@ export const FiltersList: FC = () => {
                         variant="contained"
                         onClick={() => filterContext.customResetHandler(getValues("perPage"))}
                     >
-                        сбросить
+                        <Typography>сбросить</Typography>
                     </Button>
                 </Box>
             </Box>
