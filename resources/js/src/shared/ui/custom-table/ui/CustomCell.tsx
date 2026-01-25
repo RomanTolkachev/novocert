@@ -153,6 +153,31 @@ export const CustomCell = <T extends Record<string, any>>({
 
             return '-';
 
+        case 'company_inn':
+            if (value) {
+                const { original: { company_ogrn } } = context.row;
+                return (
+                    <>
+                        <Typography variant="inherit">{highlight(value, query.company_inn)} /<br /></Typography>
+                        <Typography variant="inherit">{highlight(company_ogrn, query.company_ogrn)}</Typography>
+                    </>
+                );
+            }
+
+            return '-';
+
+        case 'okved_code':
+            if (value) {
+                const { original: { okved_name } } = context.row;
+                return (
+                    <Typography variant="inherit">
+                        {highlight(value + "." + okved_name, query.okved_code)}
+                    </Typography>
+                );
+            }
+
+            return '-';
+
         case 'organ_number':
         case 'system_cert_number':
             if (value) {
@@ -212,6 +237,15 @@ export const CustomCell = <T extends Record<string, any>>({
             );
         }
 
+
+        case "company_short_name":
+            if (value) {
+                const { id, original: { company_logo_path } } = context.row;
+                return (
+                    <TextWithImageCell id={id} text={highlight(value, query.company_logo_path)} img_path={company_logo_path} />
+                );
+            }
+            return '-';
 
         case "from_short_name":
             if (value) {

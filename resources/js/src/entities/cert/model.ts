@@ -15,6 +15,8 @@ export interface ICertificate {
     system__img: string;
     system__name: string;
     system__tech_end: string;
+    gid: string;
+    organ__gid: string;
     deletable?: boolean;
     editable?: boolean;
     hasBusinessCard?: boolean;
@@ -37,7 +39,9 @@ const CERTIFICATE_KEYS = [
     "organ__tech_end",
     "system__img",
     "system__name",
-    "system__tech_end"
+    "system__tech_end",
+    "gid",
+    "organ__gid",
 ] as const;
 
 export type CertificateKeys = typeof CERTIFICATE_KEYS[number];

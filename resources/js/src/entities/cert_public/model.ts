@@ -15,6 +15,7 @@ export interface ICertificatePublic {
     system__img: string;
     system__name: string;
     system__tech_end: string;
+    gid: string
     id: string
 
     // опциональные поля (если понадобятся в UI/CRUD)

@@ -24,5 +24,6 @@ export const translations: Record<keyof ICertificatePublic, string> = {
     deletable: "Действия",
     editable: "Действия",
     hasBusinessCard: "Действия",
-    id: "id"
+    id: "id",
+    gid: "gid",
 };

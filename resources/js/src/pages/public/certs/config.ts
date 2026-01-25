@@ -16,6 +16,8 @@ export const config: ITableConfig<ICertificate> = {
     ],
     hiddenColumns: [
         "cert__id",
+        "gid",
+        "organ__gid",
         "system__img",
         "applicant__img",
         "applicant__logo",

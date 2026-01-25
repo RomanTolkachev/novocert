@@ -21,6 +21,22 @@ const COMPANY_KEYS = [
     "tech_change",
     "tech_source",
     "tech_user",
+    // поля из companies_view
+    "company_name",
+    "company_short_name",
+    "company_full_name",
+    "company_inn",
+    "company_ogrn",
+    "company_logo_path",
+    "company_gid",
+    "company_liquidation_date",
+    "company_type",
+    "company_status",
+    "okved_code",
+    "okved_name",
+    "ceo",
+    "docs_made",
+    "docs_received",
     "cli_jur__id",
     "cli_jur__gid",
     "cli_jur__cli",
@@ -82,6 +98,23 @@ export interface ICompany {
     tech_change: string;
     tech_source: string;
     tech_user: string;
+    // поля из companies_view (public companies)
+    company_name?: string;
+    company_short_name?: string;
+    company_full_name?: string;
+    company_inn?: string;
+    company_ogrn?: string;
+    company_logo_path?: string;
+    company_gid?: string;
+    company_liquidation_date?: string;
+    company_type?: string;
+    company_status?: string;
+    okved_code?: string;
+    okved_name?: string;
+    ceo?: string;
+    docs_made?: number;
+    docs_received?: number;
+
     cli_jur__id: string;
     cli_jur__gid: string;
     cli_jur__cli: string;

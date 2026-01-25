@@ -16,8 +16,10 @@ export const translations: Record<keyof ICertificate, string> = {
     "organ__tech_end": "organ__tech_end",
     "system__img": "Изображение системы",
     "system__name": "Система сертификации",
-    "system__tech_end": "system__tech_end",
+    "system__tech_end": "system__time_end",
+    "gid": "ID сертификата",
+    "organ__gid": "ID органа",
     "deletable": "Действия",
     "editable": "Действия",
-    "hasBusinessCard": "Действия"
+    "hasBusinessCard": "карточка организации"
 };
