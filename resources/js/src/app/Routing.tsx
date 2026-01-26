@@ -2,14 +2,14 @@ import type { FC } from "react";
 import { Route, Routes } from "react-router-dom";
 import { OnlyAuth, RoleGuard } from "./AuthProvider";
 import { Certs, CertSystemsPage, CertsPage, Companies, DocsPage, Feedbacks, Organs, OrgansPage, PersonalPage, SaPersonalPage, Systems, Users } from "@/pages";
-import { CompaniesPage } from "@/pages/public";
+import { CompaniesPage, HomePage } from "@/pages/public";
 import { Bio } from "@/widgets";
 
 
 export const Routing: FC = () => {
     return (
         <Routes>
-            <Route path="/" element={<>главная</>} />
+            <Route path="/" element={<HomePage />} />
             <Route path="cert_systems" element={<CertSystemsPage />} />
             <Route path="organs" element={<OrgansPage />} />
             <Route path="certs" element={<CertsPage />} />
