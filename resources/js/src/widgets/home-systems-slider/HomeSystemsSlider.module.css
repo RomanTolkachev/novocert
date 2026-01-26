@@ -1,0 +1,56 @@
+.preloaderWrapper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    min-height: 234px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navRoot {
+    width: 100%;
+    min-height: 234px;
+    display: flex;
+    align-items: center;
+}
+
+.navMiddle {
+    flex: 1;
+    overflow: hidden;
+}
+
+.navButton {
+    height: 32px;
+    aspect-ratio: 1;
+    min-width: 0;
+    border-radius: 9999px !important;
+}
+
+.slide {
+    width: 400px;
+    box-sizing: border-box;
+}
+
+.cardRoot {
+    height: 230px;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+.cardContent {
+    flex: 1;
+}
+
+.titleClamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3;
+    min-height: 2.6em;
+    max-height: 2.6em;
+    word-break: break-word;
+}

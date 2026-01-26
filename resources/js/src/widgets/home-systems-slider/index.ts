@@ -1,0 +1,1 @@
+export { HomeSystemsSlider } from "./HomeSystemsSlider";

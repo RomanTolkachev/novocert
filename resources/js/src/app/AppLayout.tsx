@@ -21,9 +21,10 @@ export const AppLayout: FC = () => {
                         gridTemplateRows: 'auto 1fr auto',
                         height: '100svh',
                         width: '100%',
+                        minWidth: 0
                     }}>
                         <Header />
-                        <main style={{ minHeight: 0, paddingInline: theme.spacing(2) }}>
+                        <main style={{ minHeight: 0, paddingInline: theme.spacing(2), width: "100%", minWidth: 0 }}>
                             <Routing />
                         </main>
                         <Footer />
