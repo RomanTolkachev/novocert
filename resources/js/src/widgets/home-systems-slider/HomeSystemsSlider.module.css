@@ -15,18 +15,6 @@
     align-items: center;
 }
 
-.navMiddle {
-    flex: 1;
-    overflow: hidden;
-}
-
-.navButton {
-    height: 32px;
-    aspect-ratio: 1;
-    min-width: 0;
-    border-radius: 9999px !important;
-}
-
 .slide {
     width: 400px;
     box-sizing: border-box;

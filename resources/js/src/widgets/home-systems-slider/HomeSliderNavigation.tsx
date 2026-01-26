@@ -1,6 +1,5 @@
 import type { FC, MouseEventHandler, ReactNode } from "react";
-import { Box, Button } from "@mui/material";
-import styles from "./HomeSystemsSlider.module.css";
+import { Box, IconButton } from "@mui/material";
 
 export interface HomeSliderNavigationProps {
     onPrev: MouseEventHandler<HTMLButtonElement>;
@@ -43,36 +42,37 @@ export const HomeSliderNavigation: FC<HomeSliderNavigationProps> = ({
 }) => {
     return (
         <Box
-            className={styles.navRoot}
-            sx={{ gap: 1 }}
+            sx={{
+                gap: 1,
+                width: "100%",
+                minHeight: "234px",
+                display: "flex",
+                alignItems: "center",
+            }}
         >
-            <Button
-                variant="contained"
+            <IconButton
                 color="primary"
                 size="small"
                 onClick={onPrev}
                 disabled={disabledPrev}
-                className={styles.navButton}
-                sx={{ boxShadow: 1, opacity: 0.9 }}
+                sx={{ p: 0.5 }}
             >
-                <SliderArrowLeftIcon />
-            </Button>
+                <SliderArrowLeftIcon size={32} />
+            </IconButton>
 
-            <Box className={styles.navMiddle}>
+            <Box sx={{ flex: 1, overflow: "hidden" }}>
                 {children}
             </Box>
 
-            <Button
-                variant="contained"
+            <IconButton
                 color="primary"
                 size="small"
                 onClick={onNext}
                 disabled={disabledNext}
-                className={styles.navButton}
-                sx={{ boxShadow: 1, opacity: 0.9 }}
+                sx={{ p: 0.5 }}
             >
-                <SliderArrowRightIcon />
-            </Button>
-        </Box>
+                <SliderArrowRightIcon size={32} />
+            </IconButton>
+        </Box >
     );
 };

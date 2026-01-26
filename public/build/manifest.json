@@ -16,12 +16,12 @@
     "src": "../public/fonts/Ubuntu-Regular.ttf"
   },
   "app/App.tsx": {
-    "file": "assets/App-Cp-gLcLZ.js",
+    "file": "assets/App-Y1tOmHj5.js",
     "name": "App",
     "src": "app/App.tsx",
     "isEntry": true,
     "css": [
-      "assets/App-jYsvCu4X.css"
+      "assets/App-B9Gu0w9t.css"
     ],
     "assets": [
       "assets/Ubuntu-Light-DlXMI-yU.ttf",
