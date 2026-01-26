@@ -23,7 +23,7 @@ export default defineConfig({
     },
     build: {
         // outDir: resolve(__dirname, '../../public/frontend'),  // куда собирать
-        // emptyOutDir: true,
+        emptyOutDir: true,
         rollupOptions: {
             input: resolve(__dirname, 'src/app/App.tsx'),  // если нужен явный entry point
         }
