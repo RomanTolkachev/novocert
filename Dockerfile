@@ -32,5 +32,8 @@ WORKDIR /var/www/html
 COPY . .
 RUN composer install --no-interaction --optimize-autoloader
 
-CMD ["sh", "-c", "php artisan optimize && php-fpm -F"]
+COPY docker/php/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
 
