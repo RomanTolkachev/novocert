@@ -16,10 +16,11 @@ RUN apk add --no-cache \
     unzip \
     curl
 
-# Скачиваем Microsoft ODBC Driver и mssql-tools. это для AMD, если на хосте ARM, то поискать в дистрибутивах icrosoft
-RUN curl -LO https://download.microsoft.com/download/9dcab408-e0d4-4571-a81a-5a0951e3445f/msodbcsql18_18.6.1.1-1_amd64.apk \
-    && apk add --allow-untrusted msodbcsql18_18.6.1.1-1_amd64.apk \
-    && rm msodbcsql18_18.6.1.1-1_amd64.apk
+# Скачиваем Microsoft ODBC Driver (amd64 на Intel/AMD, arm64 на Apple Silicon)
+ARG TARGETARCH
+RUN curl -LO https://download.microsoft.com/download/9dcab408-e0d4-4571-a81a-5a0951e3445f/msodbcsql18_18.6.1.1-1_${TARGETARCH}.apk \
+    && apk add --allow-untrusted msodbcsql18_18.6.1.1-1_${TARGETARCH}.apk \
+    && rm msodbcsql18_18.6.1.1-1_${TARGETARCH}.apk
 
 # Устанавливаем PECL драйверы
 RUN pecl install sqlsrv pdo_sqlsrv \

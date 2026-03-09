@@ -3,9 +3,6 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/storage/{path}', function (string $path) {
-    // Временная проверка — удалить после теста
-    return response('STORAGE ROUTE HIT', 200, ['Content-Type' => 'text/plain']);
-
     $path = str_replace(['../', '..\\'], '', $path);
     $base = storage_path('app/public');
     $fullPath = $base . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $path);

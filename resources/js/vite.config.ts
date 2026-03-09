@@ -9,7 +9,8 @@ export default defineConfig({
     plugins: [
         laravel({
             input: ['app/App.tsx'],
-            publicDirectory: resolve(__dirname, '../../public'),
+            // Плагин обрезает ведущие / и считает путь относительным; абсолютный путь даёт resources/js/Users/.../public/hot
+            publicDirectory: '../../public',
             // buildDirectory: 'frontend',
             refresh: true,
         }),
@@ -33,10 +34,10 @@ export default defineConfig({
     //     port: 5173,
     //     strictPort: true, // чтобы не использовал 5174 5175 и т.д если 5173 внезапно занят
     //     watch: {
-    //         // эта штука заставляет вит проактивно сканировать изменения. 
-    //         // Обычно изменения отслеживаются операционной системой и вит подвязан на операционку. 
+    //         // эта штука заставляет вит проактивно сканировать изменения.
+    //         // Обычно изменения отслеживаются операционной системой и вит подвязан на операционку.
     //         // С этим флагом вит сканирует самостоятельно
-    //         usePolling: true 
+    //         usePolling: true
     //     }
     // }
 })

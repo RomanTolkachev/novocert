@@ -41,7 +41,6 @@ export const SkeletonImage = forwardRef<HTMLDivElement | null, ImageWithSkeleton
                 )}
 
                 <img
-                    
                     src={src}
                     alt={alt}
                     style={{

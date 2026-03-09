@@ -15,5 +15,11 @@ services:
       - .:/var/www/html
     environment:
       - APP_ENV=local
+      - APP_DEBUG=true
+      # Ключ для local (если в .env нет APP_KEY — Laravel падает с MissingAppKeyException)
+      - APP_KEY=${APP_KEY:-base64:2fl+Ktvk6F+zHLEk3yRpV3bVgB2jGTtM0wj/LQnXox8=}
+      # Без работающего MSSQL session/cache=database дают 500 — для локального запуска без БД используем file
+      - SESSION_DRIVER=file
+      - CACHE_STORE=file
     extra_hosts:
       - "host.docker.internal:host-gateway"
