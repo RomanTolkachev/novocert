@@ -2,4 +2,7 @@
  
 [[README|Novocert Project]]
 
-Документация по виджету таблицы с фильтрами: [TableWithFilters](src/widgets/table-with-filters/TableWithFilters.md)
+Документация по виджетам:
+
+- [TableWithFilters](src/widgets/table-with-filters/TableWithFilters.md) — таблица с фильтрами.
+- [HomeSystemsSlider](src/widgets/home-systems-slider/HomeSystemsSlider.md) — слайдер систем с бубликами (доли ОС и сертификатов).

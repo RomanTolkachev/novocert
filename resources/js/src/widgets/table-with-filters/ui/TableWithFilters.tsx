@@ -22,7 +22,10 @@ export const TableWithFilters = <T extends Record<string, any>>({
     config
 }: TableWithFiltersProps<T>): ReactNode => {
     const location = useLocation();
-    const [isDrawerOpen, setIsDrawerOpen] = useState(true);
+    const [isDrawerOpen, setIsDrawerOpen] = useState(() => {
+        const stored = localStorage.getItem(`${location.pathname}_filtersOpen`);
+        return stored !== "false";
+    });
     const [_, getQuery] = useParamsCustom()
 
     const { data: response, isFetching } = useQuery<AxiosResponse<ILaravelPaginator<T>>, AxiosError>({
@@ -41,7 +44,7 @@ export const TableWithFilters = <T extends Record<string, any>>({
 
     const [tableSize, setTableSize] = useState<"small" | "medium">(() => {
         const stored = localStorage.getItem(`${location.pathname}_tableSize`);
-        return stored === 'small' ? 'small' : 'medium';
+        return stored === "medium" ? "medium" : "small";
     });
 
     const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +54,9 @@ export const TableWithFilters = <T extends Record<string, any>>({
     };
 
     const toggleDrawer = () => {
-        setIsDrawerOpen(!isDrawerOpen);
+        const next = !isDrawerOpen;
+        setIsDrawerOpen(next);
+        localStorage.setItem(`${location.pathname}_filtersOpen`, next ? "true" : "false");
     };
 
     const actions = config.actions?.length
