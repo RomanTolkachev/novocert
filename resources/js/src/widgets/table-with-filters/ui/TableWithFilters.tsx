@@ -95,9 +95,9 @@ export const TableWithFilters = <T extends Record<string, any>>({
                         size={tableSize}
                         withRowActions={config.withRowActions}
                         pagination={{
-                            currentPage: response?.data.current_page,
-                            lastPage: response?.data.last_page,
-                            total: response?.data.total
+                            currentPage: response?.data.meta?.current_page,
+                            lastPage: response?.data.meta?.last_page,
+                            total: response?.data.meta?.total
                         }}
                     />
                 </div>
