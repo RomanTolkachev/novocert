@@ -15,21 +15,35 @@ class GetSystemsListResource extends JsonResource
         'bus_end',
     ];
 
+    public function __construct(
+        $resource,
+        private readonly ?array $totals = null
+    ) {
+        parent::__construct($resource);
+    }
+
     public function toArray($request): array
     {
         if ($this->resource instanceof LengthAwarePaginator) {
             $p = $this->formatDatesOnPaginator($this->resource);
 
+            $meta = [
+                'current_page' => $p->currentPage(),
+                'from' => $p->firstItem(),
+                'last_page' => $p->lastPage(),
+                'per_page' => $p->perPage(),
+                'to' => $p->lastItem(),
+                'total' => $p->total(),
+            ];
+
+            if ($this->totals !== null) {
+                $meta['total_organs'] = $this->totals['total_organs'];
+                $meta['total_documents'] = $this->totals['total_documents'];
+            }
+
             return [
                 'data' => $p->items(),
-                'meta' => [
-                    'current_page' => $p->currentPage(),
-                    'from' => $p->firstItem(),
-                    'last_page' => $p->lastPage(),
-                    'per_page' => $p->perPage(),
-                    'to' => $p->lastItem(),
-                    'total' => $p->total(),
-                ],
+                'meta' => $meta,
                 'links' => [
                     'first' => $p->url(1),
                     'last' => $p->url($p->lastPage()),

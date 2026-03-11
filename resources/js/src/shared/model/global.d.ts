@@ -6,12 +6,16 @@ declare global {
 
     export interface ILaravelPaginator<T = any> {
         data: T[];
-        current_page: number;
-        from: number | null;
-        last_page: number;
-        per_page: number;
-        to: number | null;
-        total: number;
+        meta: {
+            current_page: number;
+            from: number | null;
+            last_page: number;
+            per_page: number;
+            to: number | null;
+            total: number;
+            total_organs?: number;
+            total_documents?: number;
+        };
     }
 }
 

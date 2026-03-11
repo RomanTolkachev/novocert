@@ -2,11 +2,17 @@
 
 namespace App\UseCases\Public\Systems\GetSystemsList;
 
+use App\Services\SystemsTotalsService;
 use Illuminate\Database\Eloquent\Builder;
 use App\UseCases\Public\Systems\GetSystemsList\shared\SystemsFilters;
 
 class GetSystemsListHandler
 {
+    public function __construct(
+        private readonly SystemsTotalsService $totalsService
+    ) {
+    }
+
     public function execute(
         int $page,
         int $itemsPerPage,
@@ -24,6 +30,8 @@ class GetSystemsListHandler
             collect($result->items())->customToFlat()
         );
 
-        return new GetSystemsListResource($result);
+        $totals = $this->totalsService->get();
+
+        return new GetSystemsListResource($result, $totals);
     }
 }

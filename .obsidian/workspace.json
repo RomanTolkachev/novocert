@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "f856cd2495e619fc",
+        "id": "e4b083c08bf193d8",
         "type": "tabs",
         "children": [
           {
-            "id": "7ab72a7243f8eee6",
+            "id": "a4b8f117a7e42de8",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "app/UseCases/UseCases.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "UseCases"
+              "title": "Новая вкладка"
             }
           }
         ]
@@ -61,7 +57,7 @@
                 "sortOrder": "alphabetical"
               },
               "icon": "lucide-search",
-              "title": "Search"
+              "title": "Поиск"
             }
           },
           {
@@ -172,17 +168,21 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Open quick switcher": false,
-      "graph:Open graph view": false,
-      "canvas:Create new canvas": false,
-      "daily-notes:Open today's daily note": false,
-      "templates:Insert template": false,
-      "command-palette:Open command palette": false,
-      "bases:Create new base": false
+      "switcher:Меню быстрого перехода": false,
+      "graph:Граф": false,
+      "canvas:Создать новый холст": false,
+      "daily-notes:Сегодняшняя заметка": false,
+      "templates:Вставить шаблон": false,
+      "command-palette:Открыть палитру команд": false,
+      "bases:Создать новую базу": false
     }
   },
-  "active": "7ab72a7243f8eee6",
+  "active": "a4b8f117a7e42de8",
   "lastOpenFiles": [
+    "app/UseCases/UseCases.md",
+    "resources/js/src/widgets/table-with-filters/TableWithFilters.md",
+    "resources/js/FRONTEND.md",
+    "README.md",
     "storage/framework/cache/data/ae/77/ae77a22fca64439452b32097ac5fa68408d65869",
     "storage/framework/cache/data/ae/77",
     "storage/framework/cache/data/ae",
@@ -193,14 +193,9 @@
     "app/UseCases/Public/Organs/GetOrgansListFilters/GetOrgansListFiltersController.php",
     "app/UseCases/Public/Organs/GetOrgansListFilters",
     "app/UseCases/Public/Organs/GetOrgansList/shared/OrgansFilters.php",
-    "app/UseCases/Public/Organs/GetOrgansList/shared",
-    "resources/js/src/widgets/table-with-filters/TableWithFilters.md",
-    "resources/js/FRONTEND.md",
     "WARP.md",
     "Untitled.canvas",
     "app/BACKEND.md",
-    "README.md",
-    "app/UseCases/UseCases.md",
     "resources/js/README.md",
     "root.md"
   ]

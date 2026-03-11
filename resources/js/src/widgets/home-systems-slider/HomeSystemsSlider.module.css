@@ -16,12 +16,12 @@
 }
 
 .slide {
-    width: 400px;
+    width: 440px;
     box-sizing: border-box;
 }
 
 .cardRoot {
-    height: 230px;
+    height: 250px;
     display: flex;
     flex-direction: column;
     padding: 0;
