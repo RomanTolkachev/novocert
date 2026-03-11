@@ -18,7 +18,7 @@ export interface IFilterListItem {
     'defaultValue': string,
     'headerLabel': string,
     'order': number,
-    'type': "text" | "checkbox" | "date",
+    'type': "text" | "checkbox" | "date" | "select",
     'values'?: string[],
     'headerLabelTranslate': string,
     'tooltip'?: string
@@ -30,6 +30,8 @@ export type TFormValues = {
 
 export type ICustomSubmitHandlerContext = {
     filtersData: IFilterListItem[]
+    /** Переводы колонок таблицы — для подписей опций селекта сортировки */
+    translations?: Record<string, string>
     customSubmitHandler: (formData: Record<string, unknown>, debounceTime?: number) => void
     customResetHandler: (perPage: any) => void
     customResetField: (fieldName: string) => void

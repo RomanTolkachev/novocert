@@ -1,18 +1,31 @@
 import { Preloader, useParamsCustom } from "@/shared";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 import { use, type FC } from "react";
 import type { ICustomSubmitHandlerContext } from "../../model";
 import { CustomSubmitHandlerContext } from "../../api/CustomFormProvider";
-import { useFormContext } from "react-hook-form";
-import { Button, Divider, Typography } from "@mui/material";
+import { Controller, useFormContext } from "react-hook-form";
+import { Button, Divider, Typography, useTheme } from "@mui/material";
 import { useFormChanges } from "../../lib";
 import { CheckBoxInput } from "../input-checkbox";
 import { DateRangeInput } from "../input-date";
 import { ChipList } from "./ChipList";
 
-export const FiltersList: FC = () => {
+function formatSortOptionLabel(value: string, translations?: Record<string, string>): string {
+    const match = value.match(/^(.+)_(asc|desc)$/);
+    if (!match) return value;
+    const [, column] = match;
+    const dir = value.endsWith("_asc") ? "возр." : "убыв.";
+    const columnLabel = translations?.[column] ?? column;
+    return `${columnLabel} (${dir})`;
+}
 
+export const FiltersList: FC = () => {
+    const theme = useTheme();
     const filterContext = use<ICustomSubmitHandlerContext>(CustomSubmitHandlerContext);
     const { register, getValues, control, handleSubmit, formState: { isDirty, dirtyFields, isSubmitting } } = useFormContext();
 
@@ -79,6 +92,8 @@ export const FiltersList: FC = () => {
                                         label={filter.headerLabelTranslate}
                                         fullWidth
                                         defaultValue=""
+                                        variant="outlined"
+                                        size="medium"
                                     />
                                 );
                             case "checkbox":
@@ -88,6 +103,49 @@ export const FiltersList: FC = () => {
                             case "date":
                                 return (
                                     <DateRangeInput key={filter.headerLabel} name={filter.headerLabel} label={filter.headerLabelTranslate} />
+                                );
+                            case "select":
+                                return (
+                                    <Controller
+                                        key={filter.headerLabel}
+                                        name={filter.headerLabel}
+                                        control={control}
+                                        render={({ field }) => (
+                                            <FormControl fullWidth variant="outlined" size="medium">
+                                                <InputLabel
+                                                    id={`${filter.headerLabel}-label`}
+                                                    sx={{
+                                                        "&.MuiInputLabel-root": {
+                                                            fontSize: theme.typography.body1.fontSize,
+                                                            "&.MuiInputLabel-shrink": {
+                                                                fontSize: theme.typography.body1.fontSize,
+                                                            },
+                                                        },
+                                                    }}
+                                                >
+                                                    {filter.headerLabelTranslate}
+                                                </InputLabel>
+                                                <Select
+                                                    {...field}
+                                                    labelId={`${filter.headerLabel}-label`}
+                                                    label={filter.headerLabelTranslate}
+                                                    value={field.value ?? filter.defaultValue ?? ""}
+                                                    variant="outlined"
+                                                    sx={{
+                                                        "& .MuiSelect-select": {
+                                                            typography: "body1",
+                                                        },
+                                                    }}
+                                                >
+                                                    {(filter.values ?? []).map((optionValue: string) => (
+                                                        <MenuItem key={optionValue} value={optionValue}>
+                                                            {formatSortOptionLabel(optionValue, filterContext.translations)}
+                                                        </MenuItem>
+                                                    ))}
+                                                </Select>
+                                            </FormControl>
+                                        )}
+                                    />
                                 );
                             default:
                                 return null;

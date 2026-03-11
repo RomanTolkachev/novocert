@@ -12,6 +12,7 @@ export type Props<T extends Record<string, any>> = {
 }
 
 export const CustomFormProvider = <T extends Record<string, any>>({
+    config,
     filters,
     children
 }: PropsWithChildren<Props<T>>) => {
@@ -105,6 +106,7 @@ export const CustomFormProvider = <T extends Record<string, any>>({
                 customResetHandler,
                 customResetField,
                 filtersData: filters ?? [],
+                translations: config.translations,
                 absoluteDefaults
             }}>
             <FormProvider {...methods}>

@@ -3,14 +3,18 @@
 namespace App\UseCases\Public\Docs\GetDocsListFilters;
 
 use App\Models\FeedbackView;
+use App\Services\SortOptionsService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
 use App\UseCases\Public\Docs\shared\DocsTranslator;
 
 class GetDocsListFiltersController
 {
-    public function __invoke(): JsonResponse
+    public function __invoke(SortOptionsService $sortOptionsService): JsonResponse
     {
+        $config = require __DIR__ . '/../config.php';
+        $sortingColumns = $config['sorting_columns'];
+        $sortValues = $sortOptionsService->buildOptions($sortingColumns);
         $rawStatuses = Cache::remember('distinct_feedbacks_view_organ_status_liter', 86400, function () {
             return FeedbackView::query()
                 ->select('organ_status_liter')
@@ -86,6 +90,15 @@ class GetDocsListFiltersController
                 'order' => 8,
                 'type' => 'text',
                 'headerLabelTranslate' => 'Кому (наименование)',
+                'tooltip' => '',
+            ],
+            [
+                'defaultValue' => '',
+                'headerLabel' => 'sort',
+                'order' => 9,
+                'type' => 'select',
+                'values' => $sortValues,
+                'headerLabelTranslate' => 'Сортировка',
                 'tooltip' => '',
             ],
         ];

@@ -3,6 +3,7 @@
 namespace App\UseCases\Public\Docs\GetDocsList\shared;
 
 use App\Http\Abstract\AbstractFilter;
+use App\Services\SortOptionsService;
 use App\UseCases\Public\Docs\shared\DocsTranslator;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -11,6 +12,17 @@ class DocsFilters extends AbstractFilter
     public function __construct(array $inputs)
     {
         parent::__construct($inputs);
+    }
+
+    public function sort(?string $value): Builder
+    {
+        $config = require __DIR__ . '/../../config.php';
+        $sortingColumns = $config['sorting_columns'];
+        $parsed = app(SortOptionsService::class)->parse($sortingColumns, $value);
+        if ($parsed !== null) {
+            return $this->builder->orderBy($parsed['column'], $parsed['direction']);
+        }
+        return $this->builder;
     }
 
     // fb_name (label: fb_name): текстовый поиск по наименованию документа
