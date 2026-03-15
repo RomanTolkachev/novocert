@@ -38,6 +38,7 @@ use App\UseCases\Admin\Feedbacks\{
 
 // Public use-cases
 use App\UseCases\Public\Systems\{
+    GetSystem\GetSystemController as GetPublicSystemController,
     GetSystemsList\GetSystemsListController as GetPublicSystemsListController,
     GetSystemsListFilters\GetSystemsListFiltersController as GetPublicSystemsListFiltersController,
 };
@@ -46,6 +47,7 @@ use App\UseCases\Public\Organs\{
     GetOrgansListFilters\GetOrgansListFiltersController as GetPublicOrgansListFiltersController,
 };
 use App\UseCases\Public\Certs\{
+    GetCert\GetCertController as GetPublicCertController,
     GetCertsList\GetCertsListController as GetPublicCertsListController,
     GetCertsListFilters\GetCertsListFiltersController as GetPublicCertsListFiltersController,
 };
@@ -73,12 +75,14 @@ Route::prefix('auth')->middleware('api')->group(function () {
 
 
 Route::prefix('public')->group(function () {
+    Route::get('get-system', GetPublicSystemController::class);
     Route::get('get-systems-list', GetPublicSystemsListController::class);
     Route::get('get-systems-list-filters', GetPublicSystemsListFiltersController::class);
 
     Route::get('get-organs-list', GetPublicOrgansListController::class);
     Route::get('get-organs-list-filters', GetPublicOrgansListFiltersController::class);
 
+    Route::get('get-cert', GetPublicCertController::class);
     Route::get('get-certs-list', GetPublicCertsListController::class);
     Route::get('get-certs-list-filters', GetPublicCertsListFiltersController::class);
 

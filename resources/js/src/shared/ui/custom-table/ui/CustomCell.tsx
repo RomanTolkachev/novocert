@@ -1,6 +1,7 @@
 import { ASSETS_URL, CustomTooltip, highlight, makeList, SkeletonImage, useParamsCustom } from "@/shared";
 import { flexRender, type Cell, type Row } from "@tanstack/react-table";
 import { useRef, type ReactNode, type RefObject } from "react";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 import { ImageSmall, StatusIcon, TextWithImageCell, DownloadPDF } from "./cells";
 import { IconButton, Link, Typography, type TableProps } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
@@ -29,6 +30,7 @@ export const CustomCell = <T extends Record<string, any>>({
     const columnId = context.column.id as keyof T;
     const [_, getQuery] = useParamsCustom<ColumnsQuery>();
     const query = getQuery();
+    const location = useLocation();
 
     const triggerRef = useRef<HTMLTableCellElement | null>(null)
 
@@ -42,17 +44,37 @@ export const CustomCell = <T extends Record<string, any>>({
         }
 
         case "fb_name": {
-            const { id, original: { organ_status_liter } } = context.row;
+            const { id, original } = context.row;
+            const recordId = (original as Record<string, unknown>).id ?? (original as Record<string, unknown>).gid ?? id;
+            const { organ_status_liter } = original;
             return (
-                <TextWithImageCell id={id} text={highlight(value, query.fb_name)} img_component={<StatusIcon status_liter={organ_status_liter} />} />
+                <TextWithImageCell
+                    id={id}
+                    text={
+                        <Link component={RouterLink} to={`${location.pathname}/${recordId}`} color="inherit">
+                            {highlight(value, query.fb_name)}
+                        </Link>
+                    }
+                    img_component={<StatusIcon status_liter={organ_status_liter} />}
+                />
             );
         }
 
         case "cert__name": {
-            const { id, original: { cert__status } } = context.row;
-            let pattern = query.cert__name
+            const { id, original } = context.row;
+            const recordId = (original as Record<string, unknown>).id ?? (original as Record<string, unknown>).gid ?? id;
+            const pattern = query.cert__name;
+            const { cert__status } = original;
             return (
-                <TextWithImageCell id={id} text={highlight(value, pattern)} img_component={<StatusIcon status_liter={cert__status} />} />
+                <TextWithImageCell
+                    id={id}
+                    text={
+                        <Link component={RouterLink} to={`${location.pathname}/${recordId}`} color="inherit">
+                            {highlight(value, pattern)}
+                        </Link>
+                    }
+                    img_component={<StatusIcon status_liter={cert__status} />}
+                />
             );
         }
 
@@ -67,9 +89,19 @@ export const CustomCell = <T extends Record<string, any>>({
 
         // organs
         case "organ_name": {
-            const { id, original: { legal_logo_path } } = context.row;
+            const { id, original } = context.row;
+            const recordId = (original as Record<string, unknown>).id ?? (original as Record<string, unknown>).gid ?? id;
+            const { legal_logo_path } = original;
             return (
-                <TextWithImageCell id={id} text={value} img_path={legal_logo_path} />
+                <TextWithImageCell
+                    id={id}
+                    text={
+                        <Link component={RouterLink} to={`${location.pathname}/${recordId}`} color="inherit">
+                            {value}
+                        </Link>
+                    }
+                    img_path={legal_logo_path}
+                />
             );
         }
 
@@ -106,14 +138,16 @@ export const CustomCell = <T extends Record<string, any>>({
         // ячейка в 2 таблицах, системы и органы, поэтому через ??
         case 'system_name':
             if (value) {
-                const { id, original: { docum_web_reference, img_path, system_img_path } } = context.row;
+                const { id, original } = context.row;
+                const { img_path, system_img_path } = original;
+                const recordId = (original as Record<string, unknown>).id ?? (original as Record<string, unknown>).gid ?? id;
                 const system_name = query.system_name;
                 return (
                     <TextWithImageCell
                         img_path={img_path ?? system_img_path}
                         id={id}
                         text={
-                            <Link target="_blank" rel="noreferrer" href={docum_web_reference} color="inherit">
+                            <Link component={RouterLink} to={`${location.pathname}/${recordId}`} color="inherit">
                                 {highlight(value, system_name)}
                             </Link>
                         } />
@@ -240,9 +274,19 @@ export const CustomCell = <T extends Record<string, any>>({
 
         case "company_short_name":
             if (value) {
-                const { id, original: { company_logo_path } } = context.row;
+                const { id, original } = context.row;
+                const recordId = (original as Record<string, unknown>).id ?? (original as Record<string, unknown>).gid ?? id;
+                const { company_logo_path } = original;
                 return (
-                    <TextWithImageCell id={id} text={highlight(value, query.company_logo_path)} img_path={company_logo_path} />
+                    <TextWithImageCell
+                        id={id}
+                        text={
+                            <Link component={RouterLink} to={`${location.pathname}/${recordId}`} color="inherit">
+                                {highlight(value, query.company_short_name)}
+                            </Link>
+                        }
+                        img_path={company_logo_path}
+                    />
                 );
             }
             return '-';

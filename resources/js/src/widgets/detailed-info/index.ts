@@ -1,1 +1,0 @@
-export { DetailedInfo } from "./DetailedInfo";

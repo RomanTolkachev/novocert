@@ -29,7 +29,11 @@ export const Header: FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const currentTab = tabs.find(tab => tab.href === location.pathname)?.index ?? false;
+    const currentTab = tabs.find(tab =>
+        tab.href === "/"
+            ? location.pathname === "/"
+            : location.pathname === tab.href || location.pathname.startsWith(tab.href + "/")
+    )?.index ?? false;
 
     const { isFetched, authenticated } = use(AuthContext)
 
