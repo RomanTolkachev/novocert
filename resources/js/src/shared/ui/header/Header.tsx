@@ -21,7 +21,7 @@ const tabs: TabItem[] = [
     { index: 3, label: "Сертификаты", href: "/certs" },
     { index: 4, label: "Документы", href: "/docs" },
     { index: 5, label: "Компании", href: "/companies" },
-    { index: 6, label: "Справочники", href: "/dictionaries" },
+    // { index: 6, label: "Справочники", href: "/dictionaries" },
 ];
 
 export const Header: FC = () => {

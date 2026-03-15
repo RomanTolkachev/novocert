@@ -38,7 +38,7 @@ export const TableWithFilters = <T extends Record<string, any>>({
     const { data: filters, isFetching: filtersFetching } = useQuery<IFilterListItem[]>({
         queryKey: ["filters", config.filtersUrl],
         queryFn: () => protectedApi.get(config.filtersUrl).then(res => res.data),
-        placeholderData: keepPreviousData, // пока мы фетчим, у нас будут старые фильтры
+        // placeholderData: keepPreviousData, // пока мы фетчим, у нас будут старые фильтры
         staleTime: 1000 * 60 * 5, // 5 минут - данные считаются свежими
     });
 
@@ -65,6 +65,14 @@ export const TableWithFilters = <T extends Record<string, any>>({
 
     if (filtersFetching || !filters) {
         return <Preloader />
+    }
+
+    if (isFetching) {
+        return (
+            <Box sx={{ height: "100%", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Preloader />
+            </Box>
+        );
     }
 
     return (
