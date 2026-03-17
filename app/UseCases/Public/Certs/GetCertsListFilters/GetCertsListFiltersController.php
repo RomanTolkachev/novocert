@@ -3,15 +3,18 @@
 namespace App\UseCases\Public\Certs\GetCertsListFilters;
 
 use App\Models\DocumentView;
+use App\Services\SortOptionsService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
 use App\UseCases\Public\Certs\shared\CertsTranslator;
 
 class GetCertsListFiltersController
 {
-    public function __invoke(): JsonResponse
+    public function __invoke(SortOptionsService $sortOptionsService): JsonResponse
     {
-      
+        $config = require __DIR__ . '/../config.php';
+        $sortingColumns = $config['sorting_columns'];
+        $sortValues = $sortOptionsService->buildOptions($sortingColumns);
         $rawCertStatuses = Cache::remember('distinct_documents_view_cert__status', 86400, function () {
             return DocumentView::query()
                 ->select('cert__status')
@@ -114,6 +117,15 @@ class GetCertsListFiltersController
                 'type' => 'checkbox',
                 'values' => $translatedOrganStatuses,
                 'headerLabelTranslate' => 'Статус органа',
+                'tooltip' => '',
+            ],
+            [
+                'defaultValue' => '',
+                'headerLabel' => 'sort',
+                'order' => 11,
+                'type' => 'select',
+                'values' => $sortValues,
+                'headerLabelTranslate' => 'Сортировка',
                 'tooltip' => '',
             ],
         ];

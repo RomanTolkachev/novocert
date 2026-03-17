@@ -26,6 +26,16 @@ class GetDocsListFiltersController
 
         $translatedStatuses = DocsTranslator::translate($rawStatuses);
 
+        $rawDocTypes = Cache::remember('distinct_feedbacks_view_docum_type_name', 86400, function () {
+            return FeedbackView::query()
+                ->select('docum_type_name')
+                ->whereNotNull('docum_type_name')
+                ->distinct()
+                ->orderBy('docum_type_name')
+                ->pluck('docum_type_name')
+                ->toArray();
+        });
+
         $filters = [
             [
                 'defaultValue' => '',
@@ -44,10 +54,11 @@ class GetDocsListFiltersController
                 'tooltip' => '',
             ],
             [
-                'defaultValue' => '',
+                'defaultValue' => [],
                 'headerLabel' => 'docum_type_name',
                 'order' => 3,
-                'type' => 'text',
+                'type' => 'checkbox',
+                'values' => $rawDocTypes,
                 'headerLabelTranslate' => 'Тип документа',
                 'tooltip' => '',
             ],

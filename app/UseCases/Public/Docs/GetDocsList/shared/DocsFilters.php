@@ -37,10 +37,12 @@ class DocsFilters extends AbstractFilter
         return $this->builder->where('fb_doc_reg_num', 'LIKE', "%{$value}%");
     }
 
-    // docum_type_name: поиск по типу документа (текстом)
-    public function documTypeName(string $value): Builder
+    // docum_type_name: фильтр по типу документа (чекбокс-лист)
+    public function documTypeName($values): Builder
     {
-        return $this->builder->where('docum_type_name', 'LIKE', "%{$value}%");
+        $values = is_array($values) ? $values : [$values];
+
+        return $this->builder->whereIn('docum_type_name', $values);
     }
 
     // fb_bus_begin (label: fb_bus_begin): диапазон дат регистрации

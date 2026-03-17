@@ -33,19 +33,15 @@ export const CertDetails: FC<CertDetailsProps> = ({ scope }) => {
 
     const { cert, organ, applicant } = payload;
 
-    const applicantShort = applicant?.applicant__short_name ?? applicant?.name;
-    const applicantLegalAddress = applicant?.applicant_address__full_address ?? applicant?.applicant_address__name;
-    const applicantOkved = [applicant?.applicant__okved_code, applicant?.applicant__okved_name].filter(Boolean).join(" ") || undefined;
-
     const certDatesText =
-        cert?.bus_begin
-            ? `${formatDateDDMMYYYY(cert.bus_begin)}${cert.bus_end && cert.bus_end !== "2399-12-31" ? ` — ${formatDateDDMMYYYY(cert.bus_end)}` : ""}`
+        cert?.cert__bus_begin
+            ? `${formatDateDDMMYYYY(cert.cert__bus_begin)}${cert.cert__data_end && cert.cert__data_end !== "2399-12-31" ? ` — ${formatDateDDMMYYYY(cert.cert__data_end)}` : ""}`
             : undefined;
 
     return (
         <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
             <Typography variant="h3" sx={{ mb: 4, flex: "0 0 auto" }} align="center">
-                Сертификат — {cert?.docum_number ?? "—"}
+                Сертификат — {cert?.cert__id ?? "—"}
             </Typography>
 
             <Grid2
@@ -95,13 +91,13 @@ export const CertDetails: FC<CertDetailsProps> = ({ scope }) => {
                     <InfoCard
                         variant="outlined"
                         title="Сертификат"
-                        statusLiter={cert?.docum_status_ as any}
-                        statusTitle={cert?.cert_status__name ?? undefined}
+                        statusLiter={cert?.cert__status as any}
+                        statusTitle={undefined}
                     >
                         <Box sx={{ display: "flex", flexDirection: "column", gap: 1.25 }}>
                             <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap" }}>
                                 <Typography variant="body1" fontWeight={600}>
-                                    {cert?.docum_number ?? "—"}
+                                    {cert?.cert__id ?? "—"}
                                 </Typography>
                                 {certDatesText && (
                                     <Typography variant="body2" color="text.secondary">
@@ -115,25 +111,7 @@ export const CertDetails: FC<CertDetailsProps> = ({ scope }) => {
                                     Наименование
                                 </Typography>
                                 <Typography variant="body2">
-                                    {cert?.name ?? "—"}
-                                </Typography>
-                            </Box>
-
-                            <Box>
-                                <Typography variant="caption" color="text.secondary" display="block">
-                                    Номер бланка
-                                </Typography>
-                                <Typography variant="body2">
-                                    {cert?.blank_number ?? "—"}
-                                </Typography>
-                            </Box>
-
-                            <Box>
-                                <Typography variant="caption" color="text.secondary" display="block">
-                                    Учетный номер регистра
-                                </Typography>
-                                <Typography variant="body2">
-                                    {cert?.doc_reg_num ?? "—"}
+                                    {cert?.cert__name ?? "—"}
                                 </Typography>
                             </Box>
 
@@ -147,28 +125,6 @@ export const CertDetails: FC<CertDetailsProps> = ({ scope }) => {
                                     </Typography>
                                 </Box>
                             )}
-
-                            {cert?.docum_accreditation_scope && (
-                                <Box>
-                                    <Typography variant="caption" color="text.secondary" display="block">
-                                        Область распространения
-                                    </Typography>
-                                    <Typography variant="body2" sx={{ whiteSpace: "pre-wrap" }}>
-                                        {cert.docum_accreditation_scope}
-                                    </Typography>
-                                </Box>
-                            )}
-
-                            {cert?.standart && (
-                                <Box>
-                                    <Typography variant="caption" color="text.secondary" display="block">
-                                        Стандарты
-                                    </Typography>
-                                    <Typography variant="body2" sx={{ whiteSpace: "pre-wrap" }}>
-                                        {cert.standart}
-                                    </Typography>
-                                </Box>
-                            )}
                         </Box>
                     </InfoCard>
                 </Grid2>
@@ -176,26 +132,9 @@ export const CertDetails: FC<CertDetailsProps> = ({ scope }) => {
                 {/* Справа: заявитель */}
                 <Grid2 size={{ xs: 12, md: 4 }}>
                     <CompanyCard
-                        company={{
-                            title: "Заявитель",
-                            variant: "outlined",
-                            logoPath: applicant?.logo_path ?? null,
-                            shortName: applicantShort ?? null,
-                            statusLiter: applicant?.applicant_status__gid as any,
-                            statusTitle: applicant?.applicant_status__name ?? undefined,
-                            fullName: applicant?.name ?? null,
-                            inn: applicant?.inn ?? null,
-                            ogrn: applicant?.ogrn ?? null,
-                            kpp: applicant?.applicant__kpp ?? null,
-                            busBegin: applicant?.bus_begin ?? null,
-                            liquidationDate: null,
-                            okvedCode: applicant?.applicant__okved_code ?? null,
-                            okvedName: applicant?.applicant__okved_name ?? null,
-                            headName: applicant?.applicant__head_name ?? null,
-                            headPosition: null,
-                            addressFull: applicantLegalAddress ?? null,
-                            addressName: null,
-                        }}
+                        title="Заявитель"
+                        variant="outlined"
+                        company={applicant}
                     />
                 </Grid2>
             </Grid2>

@@ -8,7 +8,7 @@ import {
 } from "@/pages/public";
 import type { FC } from "react";
 import { Typography } from "@mui/material";
-import { Bio, CertDetails, OrganDetails, SystemDetails } from "@/widgets";
+import { Bio, CertDetails, CompanyDetails, DocDetails, OrganDetails, SystemDetails } from "@/widgets";
 import { Preloader, useDetailedData, type DetailScope } from "@/shared";
 
 type DetailStubProps = {
@@ -55,11 +55,11 @@ export const Routing = () => {
             </Route>
             <Route path="docs" element={<LayoutWithOutlet />}>
                 <Route path="" element={<DocsPage />} />
-                <Route path=":id" element={<DetailStub entity_type="doc" scope="public" />} />
+                <Route path=":id" element={<DocDetails scope="public" />} />
             </Route>
             <Route path="companies" element={<LayoutWithOutlet />}>
                 <Route path="" element={<CompaniesPage />} />
-                <Route path=":id" element={<DetailStub entity_type="company" scope="public" />} />
+                <Route path=":id" element={<CompanyDetails scope="public" />} />
             </Route>
             <Route path="dictionaries" element={<LayoutWithOutlet />}>
                 <Route path="" element={<>справочники</>} />

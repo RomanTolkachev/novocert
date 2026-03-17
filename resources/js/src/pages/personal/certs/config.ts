@@ -9,7 +9,7 @@ export const config: ITableConfig<ICertificate> = {
     columnOrder: [
         "cert__name",
         "cert__bus_begin",
-        "cert__data_end",
+        "cert__bus_end",
         "system__name",
         "organ__name",
         "applicant__short_name",

@@ -5,12 +5,26 @@ namespace App\UseCases\Public\Certs\GetCertsList\shared;
 use App\Http\Abstract\AbstractFilter;
 use App\UseCases\Public\Certs\shared\CertsTranslator;
 use Illuminate\Database\Eloquent\Builder;
+use App\Services\SortOptionsService;
 
 class CertsFilters extends AbstractFilter
 {
     public function __construct(array $inputs)
     {
         parent::__construct($inputs);
+    }
+
+    public function sort(?string $value): Builder
+    {
+        $config = require __DIR__ . '/../../config.php';
+        $sortingColumns = $config['sorting_columns'];
+        $parsed = app(SortOptionsService::class)->parse($sortingColumns, $value);
+
+        if ($parsed !== null) {
+            return $this->builder->orderBy($parsed['column'], $parsed['direction']);
+        }
+
+        return $this->builder;
     }
 
 

@@ -53,10 +53,12 @@ use App\UseCases\Public\Certs\{
     GetCertsListFilters\GetCertsListFiltersController as GetPublicCertsListFiltersController,
 };
 use App\UseCases\Public\Docs\{
+    GetDoc\GetDocController as GetPublicDocController,
     GetDocsList\GetDocsListController as GetPublicDocsListController,
     GetDocsListFilters\GetDocsListFiltersController as GetPublicDocsListFiltersController,
 };
 use App\UseCases\Public\Companies\{
+    GetCompany\GetCompanyController as GetPublicCompanyController,
     GetCompaniesList\GetCompaniesListController as GetPublicCompaniesListController,
     GetCompaniesListFilters\GetCompaniesListFiltersController as GetPublicCompaniesListFiltersController,
 };
@@ -90,7 +92,9 @@ Route::prefix('public')->group(function () {
 
     Route::get('get-docs-list', GetPublicDocsListController::class);
     Route::get('get-docs-list-filters', GetPublicDocsListFiltersController::class);
+    Route::get('get-doc', GetPublicDocController::class);
 
+    Route::get('get-company', GetPublicCompanyController::class);
     Route::get('get-companies-list', GetPublicCompaniesListController::class);
     Route::get('get-companies-list-filters', GetPublicCompaniesListFiltersController::class);
 });

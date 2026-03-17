@@ -102,8 +102,6 @@ The MSSQL view for certificates/documents (DocumentView) is defined as:
 SELECT TOP (1000)
     dbo.docum.name              AS cert__name,
     dbo.cli_jur.short_name      AS applicant__short_name,
-    dbo.cli.inn                 AS applicant__inn,
-    dbo.cli.ogrn                AS applicant__ogrn,
     dbo.docum.docum_status_     AS cert__status,
     dbo.organ_reestr_system_.name AS system__name,
     dbo.organ.name              AS organ__name,
@@ -117,9 +115,7 @@ SELECT TOP (1000)
     dbo.docum.id                AS cert__id,
     dbo.organ_reestr_system_.tech_end AS system__tech_end,
     dbo.organ.tech_end          AS organ__tech_end,
-    dbo.docum.data_end          AS cert__data_end,
-    dbo.docum.status_valid,
-    dbo.docum.haz_ref           AS cert__haz_ref,
+    dbo.docum.bus_end           AS cert__bus_end,
     dbo.docum.gid               AS gid,
     dbo.organ.gid               AS organ__gid
 FROM dbo.docum
@@ -159,7 +155,10 @@ SELECT dbo.cli_with_cli_jur.name AS company_name,
        dbo.cli_okved.name AS okved_name,
        dbo.cli_jur_position.name AS ceo,
        COALESCE(derivedtbl_1.docs_made, 0) AS docs_made,
-       COALESCE(derivedtbl_2.docs_received, 0) AS docs_received
+       COALESCE(derivedtbl_2.docs_received, 0) AS docs_received,
+       dbo.cli.bus_begin AS company_bus_begin,
+       dbo.cli.bus_end AS company_bus_end,
+       dbo.cli.cli_status_ AS cli_status_
 FROM dbo.cli_okved
 RIGHT OUTER JOIN (
     SELECT cli_gid, COUNT(*) AS docs_received

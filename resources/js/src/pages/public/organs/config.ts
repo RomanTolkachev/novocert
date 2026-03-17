@@ -27,7 +27,8 @@ export const config: ITableConfig<IOrgan> = {
         "organ_cert_end_date",
         "organ_status_",
         "docum_web_reference",
-        "legal_ogrn"
+        "legal_ogrn",
+        "cli"
     ],
     actions: [],
     refetchOnMount: false,

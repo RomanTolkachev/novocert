@@ -30,19 +30,24 @@ export const InfoCard: FC<InfoCardProps> = ({ variant = "outlined", title, statu
                 borderColor: "divider",
             }}
         >
-            <Box sx={{ position: "relative", mb: 1.5, pr: 6 }}>
-                <Typography variant="h5" color="text.secondary">
+            <Box
+                sx={{
+                    mb: 1.5,
+                    display: "grid",
+                    gridTemplateColumns: statusLiter ? "1fr auto" : "1fr",
+                    columnGap: 1,
+                    alignItems: "start",
+                }}
+            >
+                <Typography variant="h5" color="text.secondary" sx={{ minWidth: 0 }}>
                     {title}
                 </Typography>
                 {statusLiter && (
                     <Box
                         sx={{
-                            position: "absolute",
-                            top: "50%",
-                            right: 0,
-                            transform: "translateY(-50%)",
                             display: "flex",
                             alignItems: "center",
+                            pt: 0.25,
                         }}
                     >
                         <StatusIcon status_liter={statusLiter} title={statusTitle} />

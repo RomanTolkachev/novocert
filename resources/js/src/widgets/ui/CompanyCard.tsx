@@ -28,10 +28,31 @@ export const CompanyCard: FC<CompanyCardProps> = ({ title, variant = "outlined",
         company?.liquidation_date ??
         null;
     const isLiquidated = liquidationDate && liquidationDate !== "1900-01-01";
-    const activeSince = company?.bus_begin ?? company?.cli_jur__bus_begin ?? null;
-    const statusText = isLiquidated
-        ? (liquidationDate ? `Ликвидирован с ${formatDateDDMMYYYY(liquidationDate)}` : "Ликвидирован")
-        : (activeSince ? `Действует с ${formatDateDDMMYYYY(activeSince)}` : undefined);
+    const activeSince =
+        company?.company_bus_begin ??
+        company?.bus_begin ??
+        company?.cli_jur__bus_begin ??
+        null;
+
+    // Формируем человекочитаемый статус:
+    // - текстовый статус из CompanyView (company_status)
+    // - период действия (bus_begin)
+    // - дата ликвидации (liquidation_date)
+    let statusParts: string[] = [];
+
+    if (company?.company_status) {
+        statusParts.push(company.company_status);
+    }
+
+    if (activeSince) {
+        statusParts.push(`с ${formatDateDDMMYYYY(activeSince)}`);
+    }
+
+    if (isLiquidated) {
+        statusParts.push(`ликвидирована ${formatDateDDMMYYYY(liquidationDate!)}`);
+    }
+
+    const statusText = statusParts.length > 0 ? statusParts.join(", ") : undefined;
 
     // status icon: используем литеральный статус cli_status_ (как в таблицах)
     const statusLiter = (company?.cli_status_ ?? undefined) as any;

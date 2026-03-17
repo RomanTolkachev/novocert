@@ -5,12 +5,16 @@ namespace App\UseCases\Public\Organs\GetOrgansListFilters;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
 use App\Models\OrganView;
+use App\Services\SortOptionsService;
 use App\UseCases\Public\Organs\shared\OrgansTranslator;
 
 class GetOrgansListFiltersController
 {
-    public function __invoke(): JsonResponse
+    public function __invoke(SortOptionsService $sortOptionsService): JsonResponse
     {
+        $config = require __DIR__ . '/../GetOrgansList/config.php';
+        $sortingColumns = $config['sorting_columns'];
+        $sortValues = $sortOptionsService->buildOptions($sortingColumns);
         $rawStatuses = Cache::remember('distinct_organs_view_organ_status_', 86400, function () {
             return OrganView::query()
                 ->select('organ_status_')
@@ -91,9 +95,18 @@ class GetOrgansListFiltersController
             [
                 'defaultValue' => '',
                 'headerLabel' => 'legal_inn',
-'order' => 9,
+                'order' => 9,
                 'type' => 'text',
                 'headerLabelTranslate' => 'ИНН заявителя',
+                'tooltip' => '',
+            ],
+            [
+                'defaultValue' => '',
+                'headerLabel' => 'sort',
+                'order' => 10,
+                'type' => 'select',
+                'values' => $sortValues,
+                'headerLabelTranslate' => 'Сортировка',
                 'tooltip' => '',
             ],
         ];

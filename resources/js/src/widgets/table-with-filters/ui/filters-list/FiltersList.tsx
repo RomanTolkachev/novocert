@@ -136,6 +136,16 @@ export const FiltersList: FC = () => {
                                                             typography: "body1",
                                                         },
                                                     }}
+                                                    MenuProps={{
+                                                        PaperProps: {
+                                                            sx: {
+                                                                bgcolor:
+                                                                    theme.palette.mode === "dark"
+                                                                        ? theme.palette.background.default
+                                                                        : theme.palette.background.paper,
+                                                            },
+                                                        },
+                                                    }}
                                                 >
                                                     {(filter.values ?? []).map((optionValue: string) => (
                                                         <MenuItem key={optionValue} value={optionValue}>

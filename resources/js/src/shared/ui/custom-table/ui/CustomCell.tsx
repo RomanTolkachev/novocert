@@ -45,13 +45,19 @@ export const CustomCell = <T extends Record<string, any>>({
 
         case "fb_name": {
             const { id, original } = context.row;
-            const recordId = (original as Record<string, unknown>).id ?? (original as Record<string, unknown>).gid ?? id;
+            // Для документов (feedbacks_view) детальная ссылка строго по gid (fb_gid)
+            const recordId = (original as Record<string, unknown>).fb_gid as string | undefined;
             const { organ_status_liter } = original;
             return (
                 <TextWithImageCell
                     id={id}
                     text={
-                        <Link component={RouterLink} to={`${location.pathname}/${recordId}`} color="inherit">
+                        <Link
+                            component={RouterLink}
+                            to={recordId ? `${location.pathname}/${recordId}` : location.pathname}
+                            color="inherit"
+                            sx={recordId ? undefined : { pointerEvents: "none", opacity: 0.6 }}
+                        >
                             {highlight(value, query.fb_name)}
                         </Link>
                     }
@@ -250,13 +256,19 @@ export const CustomCell = <T extends Record<string, any>>({
         case "company_short_name":
             if (value) {
                 const { id, original } = context.row;
-                const recordId = (original as Record<string, unknown>).id ?? (original as Record<string, unknown>).gid ?? id;
+                // Для компаний детальная страница должна открываться строго по gid компании (company_gid)
+                const recordId = (original as Record<string, unknown>).company_gid as string | undefined;
                 const { company_logo_path } = original;
                 return (
                     <TextWithImageCell
                         id={id}
                         text={
-                            <Link component={RouterLink} to={`${location.pathname}/${recordId}`} color="inherit">
+                            <Link
+                                component={RouterLink}
+                                to={recordId ? `${location.pathname}/${recordId}` : location.pathname}
+                                color="inherit"
+                                sx={recordId ? undefined : { pointerEvents: "none", opacity: 0.6 }}
+                            >
                                 {highlight(value, query.company_short_name)}
                             </Link>
                         }

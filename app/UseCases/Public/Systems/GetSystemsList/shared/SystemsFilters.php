@@ -5,12 +5,26 @@ namespace App\UseCases\Public\Systems\GetSystemsList\shared;
 use App\Http\Abstract\AbstractFilter;
 use App\UseCases\Public\Systems\shared\SystemsTranslator;
 use Illuminate\Database\Eloquent\Builder;
+use App\Services\SortOptionsService;
 
 class SystemsFilters extends AbstractFilter
 {
     public function __construct(array $inputs)
     {
         parent::__construct($inputs);
+    }
+
+    public function sort(?string $value): Builder
+    {
+        $config = require __DIR__ . '/../config.php';
+        $sortingColumns = $config['sorting_columns'];
+        $parsed = app(SortOptionsService::class)->parse($sortingColumns, $value);
+
+        if ($parsed !== null) {
+            return $this->builder->orderBy($parsed['column'], $parsed['direction']);
+        }
+
+        return $this->builder;
     }
 
        

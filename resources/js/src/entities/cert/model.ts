@@ -7,7 +7,7 @@ export interface ICertificate {
     applicant__ogrn: string;
     applicant__tech_end: string;
     cert__bus_begin: string;
-    cert__data_end: string;
+    cert__bus_end: string;
     cert__id: string;
     cert__name: string;
     cert__status: string;
@@ -35,7 +35,7 @@ const CERTIFICATE_KEYS = [
     "applicant__ogrn",
     "applicant__tech_end",
     "cert__bus_begin",
-    "cert__data_end",
+    "cert__bus_end",
     "cert__id",
     "cert__name",
     "cert__status",

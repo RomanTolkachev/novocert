@@ -107,6 +107,8 @@ export interface ICompany {
     company_logo_path?: string;
     company_gid?: string;
     company_liquidation_date?: string;
+    company_bus_begin?: string;
+    company_bus_end?: string;
     company_type?: string;
     company_status?: string;
     okved_code?: string;

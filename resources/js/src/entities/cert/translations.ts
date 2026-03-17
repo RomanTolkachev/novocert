@@ -9,7 +9,7 @@ export const translations: Record<keyof ICertificate, string> = {
     "applicant__ogrn": "ОГРН заявителя",
     "applicant__tech_end": "applicant__tech_end",
     "cert__bus_begin": "Дата регистрации",
-    "cert__data_end": "Дата окончания",
+    "cert__bus_end": "Дата окончания",
     "cert__id": "id",
     "cert__name": "Наименование",
     "cert__status": "Статус",
