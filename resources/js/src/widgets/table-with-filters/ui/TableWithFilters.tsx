@@ -113,11 +113,10 @@ export const TableWithFilters = <T extends Record<string, any>>({
                 {/* Drawer */}
                 <Box className={styles.filtersWrapper} sx={{
                     borderColor: 'divider',
-                    backgroundColor: 'background.paper',
+                    backgroundColor: 'transparent',
                 }}>
                     <Box className={styles.filtersToggle} sx={{
                         px: theme => theme.spacing(1),
-                        backgroundColor: 'background.default',
                         borderBottom: isDrawerOpen ? '1px solid' : 'none',
                         borderColor: 'divider'
                     }}>

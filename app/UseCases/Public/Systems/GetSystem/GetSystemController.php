@@ -10,7 +10,13 @@ class GetSystemController
 {
     public function __invoke(GetSystemRequest $request): JsonResponse
     {
-        $system = SystemView::item($request->validated('id'))->with('organs')->first();
+        $system = SystemView::item($request->validated('id'))
+            ->withOwnerJur()
+            ->withOwnerAddress()
+            ->withOwnerPosition()
+            ->withOwnerOkved()
+            ->with('organs')
+            ->first();
 
         if ($system === null) {
             return new JsonResponse(['message' => 'Not found'], Response::HTTP_NOT_FOUND);

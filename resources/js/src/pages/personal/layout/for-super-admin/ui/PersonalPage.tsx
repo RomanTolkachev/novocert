@@ -35,6 +35,7 @@ export const PersonalPage: FC<PropsWithChildren> = () => {
                         '& .MuiDrawer-paper': {
                             position: 'static',
                             boxSizing: 'border-box',
+                            backgroundColor: 'transparent',
                         },
                         height: "100%"
                     }}

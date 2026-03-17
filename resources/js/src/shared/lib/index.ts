@@ -1,4 +1,5 @@
 export * from "./useClickOutside"
+export { formatDateDDMMYYYY } from "./formatDateDDMMYYYY"
 export { highlight } from "./highlight"
 export { makeList } from "./makeList"
 export { makeClamp } from "./makeClamp"

@@ -36,7 +36,7 @@ export const CheckBoxInput: FC<Props> = ({ filterData, control }) => {
             square
             sx={{
                 borderRadius: 1,
-                bgcolor: theme.palette.background.paper,
+                bgcolor: "transparent",
                 boxShadow: "none",
                 border: `1px solid ${borderColor}`,
                 "&:hover": { borderColor: borderHover },
@@ -63,7 +63,7 @@ export const CheckBoxInput: FC<Props> = ({ filterData, control }) => {
             </AccordionSummary>
 
             <AccordionDetails sx={{
-                bgcolor: theme.palette.background.paper,
+                bgcolor: "transparent",
                 pl: 1, pr: 0, py: 0,
                 maxHeight: filterData.values && filterData.values.length > 2 ? 120 : "auto", // ~2 чекбокса высота
                 overflowY: filterData.values && filterData.values.length > 2 ? "auto" : "visible",

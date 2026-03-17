@@ -44,7 +44,7 @@ export const DateRangeInput: FC<Props> = ({ name, label }) => {
                     square
                     sx={{
                         borderRadius: 1,
-                        bgcolor: theme.palette.background.paper,
+                        bgcolor: "transparent",
                         boxShadow: "none",
                         border: `1px solid ${borderColor}`,
                         transition: "border-color 0.2s ease",
@@ -67,7 +67,7 @@ export const DateRangeInput: FC<Props> = ({ name, label }) => {
 
                     <AccordionDetails
                         sx={{
-                            bgcolor: theme.palette.background.paper,
+                            bgcolor: "transparent",
                             px: 1,
                             py: 1,
                             display: "flex",

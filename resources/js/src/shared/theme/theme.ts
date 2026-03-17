@@ -51,12 +51,30 @@ export const theme = createTheme({
 
     },
     components: {
+        MuiAccordion: {
+            styleOverrides: {
+                root: ({ theme }) => ({
+                    backgroundColor: 'transparent',
+                    backgroundImage: 'none',
+                    border: `1px solid ${theme.palette.divider}`,
+                    boxShadow: 'none',
+                }),
+            },
+        },
         MuiPaper: {
             styleOverrides: {
-                root: {
+                root: ({ ownerState, theme }) => ({
                     paddingInline: 12,
-                    paddingswap: 3
-                },
+                    paddingswap: 3,
+                    ...(ownerState.variant === 'outlined' && { backgroundColor: 'transparent' }),
+                    ...(ownerState.variant !== 'outlined' && {
+                        backgroundColor: 'transparent',
+                        backgroundImage: theme.palette.mode === 'light'
+                            ? 'radial-gradient(ellipse 80% 80% at 0% 0%, rgba(27, 51, 81, 0.18) 0%, transparent 55%), radial-gradient(ellipse 160% 160% at 100% 100%, rgba(155, 97, 149, 0.12) 0%, transparent 50%)'
+                            : 'radial-gradient(ellipse 80% 80% at 0% 0%, rgba(27, 51, 81, 0.5) 0%, transparent 60%), radial-gradient(ellipse 160% 160% at 100% 100%, rgba(155, 97, 149, 0.12) 0%, transparent 50%)',
+                        border: `1px solid ${theme.palette.divider}`,
+                    }),
+                }),
             }
         },
         MuiTableCell: {
@@ -98,6 +116,27 @@ export const theme = createTheme({
                 },
             }
         },
+        MuiButton: {
+            styleOverrides: {
+                root: ({ ownerState }) => ({
+                    ...(ownerState.variant !== 'contained' && { backgroundColor: 'transparent' }),
+                }),
+            },
+        },
+        MuiInputBase: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: 'transparent',
+                },
+            },
+        },
+        MuiOutlinedInput: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: 'transparent',
+                },
+            },
+        },
         MuiTabs: {
             styleOverrides: {
                 root: {
@@ -138,6 +177,52 @@ export const theme = createTheme({
 
                 body {
                   scrollbar-color: #6b6b6b transparent;
+                }
+
+                [data-mui-color-scheme="light"] body {
+                  background-color: #fff;
+                  background-image:
+                    radial-gradient(ellipse 65% 55% at 0% 100%, rgba(47, 129, 174, 0.08) 0%, rgba(91, 97, 216, 0.06) 25%, rgba(84, 49, 193, 0.04) 45%, transparent 70%),
+                    radial-gradient(ellipse 120% 80% at 30% 40%, rgba(100, 100, 100, 0.04) 0%, transparent 55%),
+                    radial-gradient(ellipse 60% 60% at 0% 0%, rgba(100, 100, 100, 0.05) 0%, transparent 45%),
+                    radial-gradient(ellipse 70% 40% at 0% 100%, rgba(100, 100, 100, 0.04) 0%, transparent 40%),
+                    radial-gradient(ellipse 50% 80% at 80% 20%, rgba(100, 100, 100, 0.03) 0%, transparent 45%);
+                  background-attachment: fixed;
+                }
+
+                [data-mui-color-scheme="dark"] body {
+                  background-color: #121212;
+                  background-image:
+                    radial-gradient(ellipse 65% 55% at 0% 100%, rgba(47, 129, 174, 0.1) 0%, rgba(91, 97, 216, 0.08) 25%, rgba(84, 49, 193, 0.06) 45%, transparent 70%),
+                    radial-gradient(ellipse 120% 80% at 30% 40%, rgba(45, 50, 58, 0.35) 0%, transparent 55%),
+                    radial-gradient(ellipse 60% 60% at 0% 0%, rgba(43, 47, 54, 0.5) 0%, transparent 45%),
+                    radial-gradient(ellipse 70% 40% at 0% 100%, rgba(43, 47, 54, 0.4) 0%, transparent 40%),
+                    radial-gradient(ellipse 50% 80% at 80% 20%, rgba(43, 47, 54, 0.3) 0%, transparent 45%);
+                  background-attachment: fixed;
+                }
+
+                [data-mui-color-scheme="light"] thead,
+                [data-mui-color-scheme="light"] .MuiTableCell-head {
+                  background-color: #fff;
+                  background-image:
+                    radial-gradient(ellipse 65% 55% at 0% 100%, rgba(47, 129, 174, 0.08) 0%, rgba(91, 97, 216, 0.06) 25%, rgba(84, 49, 193, 0.04) 45%, transparent 70%),
+                    radial-gradient(ellipse 120% 80% at 30% 40%, rgba(100, 100, 100, 0.04) 0%, transparent 55%),
+                    radial-gradient(ellipse 60% 60% at 0% 0%, rgba(100, 100, 100, 0.05) 0%, transparent 45%),
+                    radial-gradient(ellipse 70% 40% at 0% 100%, rgba(100, 100, 100, 0.04) 0%, transparent 40%),
+                    radial-gradient(ellipse 50% 80% at 80% 20%, rgba(100, 100, 100, 0.03) 0%, transparent 45%);
+                  background-attachment: fixed;
+                }
+
+                [data-mui-color-scheme="dark"] thead,
+                [data-mui-color-scheme="dark"] .MuiTableCell-head {
+                  background-color: #121212;
+                  background-image:
+                    radial-gradient(ellipse 65% 55% at 0% 100%, rgba(47, 129, 174, 0.1) 0%, rgba(91, 97, 216, 0.08) 25%, rgba(84, 49, 193, 0.06) 45%, transparent 70%),
+                    radial-gradient(ellipse 120% 80% at 30% 40%, rgba(45, 50, 58, 0.35) 0%, transparent 55%),
+                    radial-gradient(ellipse 60% 60% at 0% 0%, rgba(43, 47, 54, 0.5) 0%, transparent 45%),
+                    radial-gradient(ellipse 70% 40% at 0% 100%, rgba(43, 47, 54, 0.4) 0%, transparent 40%),
+                    radial-gradient(ellipse 50% 80% at 80% 20%, rgba(43, 47, 54, 0.3) 0%, transparent 45%);
+                  background-attachment: fixed;
                 }
 
                 body::-webkit-scrollbar,

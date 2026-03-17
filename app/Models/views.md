@@ -91,6 +91,8 @@ WHERE
     AND dbo.cli_jur.tech_end = CONVERT(DATETIME, '2399-12-31 00:00:00', 102);
 ```
 
+**Детальная страница:** к выборке системы добавлены left join'ы: `scopeWithOwnerJur()` — `cli_jur`; `scopeWithOwnerAddress()` — `cli_address` (jur, tech_end 2399-12-31); `scopeWithOwnerPosition()` — `cli_jur_position` + `cli_jur_position_type_`; `scopeWithOwnerOkved()` — `cli_okved` (is_main = 1, tech_end 2399-12-31), в ответе `owner__okved_code`, `owner__okved_name` (как в Companies view: код и наименование основного вида деятельности). Таблица `cli_okved_type` в моделях есть, в view Companies не участвует — при необходимости можно джойнить по полю типа в `cli_okved`.
+
 ### Documents view (DocumentView)
 
 The MSSQL view for certificates/documents (DocumentView) is defined as:
