@@ -37,6 +37,7 @@ export interface IOrgan {
     legal_logo_path: string;
     certs_count: string;
     docum_web_reference: string;
+    cli: string;
     /** в ответе get-system (список аккредитованных ОС) */
     id?: number;
     name?: string;

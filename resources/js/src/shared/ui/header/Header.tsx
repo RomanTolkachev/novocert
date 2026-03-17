@@ -66,7 +66,9 @@ export const Header: FC = () => {
                                 fontSize: (theme) => theme.typography.caption,
                             }}
                             key={tab.index}
-                            label={tab.label} />
+                            label={tab.label}
+                            onClick={() => navigate(tab.href)}
+                        />
                     ))}
                 </Tabs>
                 <Stack

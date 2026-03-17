@@ -28,7 +28,8 @@ SELECT
     dbo.cli_with_cli_jur.ogrn             AS legal_ogrn,
     dbo.cli_with_cli_jur.logo_path        AS legal_logo_path,
     COALESCE(dc_1.docs_count, 0)          AS certs_count,
-    dbo.organ_reestr_system_.docum_web_reference
+    dbo.organ_reestr_system_.docum_web_reference,
+    dbo.organ.cli
 FROM dbo.organ
 LEFT OUTER JOIN dbo.cli_with_cli_jur
     ON dbo.organ.cli = dbo.cli_with_cli_jur.gid

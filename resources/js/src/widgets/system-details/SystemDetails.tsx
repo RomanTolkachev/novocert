@@ -74,11 +74,16 @@ export const SystemDetails: FC<CertDetailsProps> = ({ scope }) => {
 
     return (
         <Box sx={{ height: "100%", display: "flex", flexDirection: "column"}}>
-            <Typography variant="h3" sx={{ mb: 4, minHeight: 0 }} align="center">
+            <Typography variant="h3" sx={{ mb: 4, flex: "0 0 auto" }} align="center">
                 Система сертификации — {system_name}
             </Typography>
             {/* тутутутуту */}
-            <Grid2 sx={{height: "100%", minHeight: 0, overflowY: "auto", "&>*": {height: "100%"}}} container spacing={2} alignItems="stretch">
+            <Grid2
+                sx={{ flex: 1, minHeight: 0, overflowY: "auto", "&>*": { height: "100%" } }}
+                container
+                spacing={2}
+                alignItems="stretch"
+            >
                 {/* Слева: юр.лицо — владелец (по дизайну) */}
                 <Grid2 size={{ xs: 12, md: 4 }}>
                     <InfoCard
@@ -156,7 +161,7 @@ export const SystemDetails: FC<CertDetailsProps> = ({ scope }) => {
                         ) : (
                             <List sx={{ listStyle: "none", m: 0, pl: 0 }}>
                                 {organs.map((organ) => {
-                                    const organId = String(organ.id ?? organ.gid);
+                                    const organId = String(organ.gid);
                                     const to = scope === "public" ? `/organs/${organId}` : `/personal/organs/${organId}`;
                                     const primary = organ.name ?? organ.full_name ?? organ.organ_name ?? organ.identifier ?? "—";
                                     const secondary =

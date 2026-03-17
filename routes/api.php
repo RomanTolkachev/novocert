@@ -43,6 +43,7 @@ use App\UseCases\Public\Systems\{
     GetSystemsListFilters\GetSystemsListFiltersController as GetPublicSystemsListFiltersController,
 };
 use App\UseCases\Public\Organs\{
+    GetOrgan\GetOrganController as GetPublicOrganController,
     GetOrgansList\GetOrgansListController as GetPublicOrgansListController,
     GetOrgansListFilters\GetOrgansListFiltersController as GetPublicOrgansListFiltersController,
 };
@@ -79,6 +80,7 @@ Route::prefix('public')->group(function () {
     Route::get('get-systems-list', GetPublicSystemsListController::class);
     Route::get('get-systems-list-filters', GetPublicSystemsListFiltersController::class);
 
+    Route::get('get-organ', GetPublicOrganController::class);
     Route::get('get-organs-list', GetPublicOrgansListController::class);
     Route::get('get-organs-list-filters', GetPublicOrgansListFiltersController::class);
 
