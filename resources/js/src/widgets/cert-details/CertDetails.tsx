@@ -1,14 +1,15 @@
 import type { FC } from "react";
-import { Box, Grid2, Link, Paper, Typography } from "@mui/material";
-import { ASSETS_URL, formatDateDDMMYYYY, Preloader, useDetailedData, type DetailScope } from "@/shared";
-import type { ISystemDetail } from "./types";
+import { Box, Grid2, Typography } from "@mui/material";
+import { ASSETS_URL, formatDateDDMMYYYY, InfoCard, Preloader, useDetailedData, type DetailScope } from "@/shared";
+import { CompanyCard } from "@/widgets/ui";
+import type { ICertDetailPayload } from "./types";
 
 type CertDetailsProps = {
     scope: DetailScope;
 };
 
 export const CertDetails: FC<CertDetailsProps> = ({ scope }) => {
-    const { data, isFetching, error } = useDetailedData(scope, "system");
+    const { data, isFetching, error } = useDetailedData(scope, "cert");
 
     if (isFetching) {
         return <Preloader />;
@@ -21,7 +22,7 @@ export const CertDetails: FC<CertDetailsProps> = ({ scope }) => {
         );
     }
 
-    const payload = data?.data as ISystemDetail | undefined;
+    const payload = data?.data as ICertDetailPayload | undefined;
     if (!payload) {
         return (
             <Typography variant="body1" color="text.secondary">
@@ -30,178 +31,172 @@ export const CertDetails: FC<CertDetailsProps> = ({ scope }) => {
         );
     }
 
-    const {
-        owner__short_name,
-        owner__full_name,
-        owner__inn,
-        owner__ogrn,
-        owner__kpp,
-        owner__logo_path,
-        owner__head_name,
-        owner__head_position,
-        system_name,
-        system_cert_number,
-        status__name,
-        bus_begin,
-        accreditation,
-        docum_web_reference,
-        organs = [],
-    } = payload;
+    const { cert, organ, applicant } = payload;
 
-    const ownerLegalAddress = payload.owner_address__full_address ?? payload.owner_address__name;
-    const ownerActivityCode = [payload.owner__okved_code, payload.owner__okved_name].filter(Boolean).join(" ") || undefined;
-    const isLiquidated = payload.owner__liquidation_date && payload.owner__liquidation_date !== "1900-01-01";
-    const ownerStatusText = isLiquidated
-        ? (payload.owner__liquidation_date ? `Ликвидирован с ${formatDateDDMMYYYY(payload.owner__liquidation_date)}` : "Ликвидирован")
-        : (payload.owner__bus_begin ? `Действует с ${formatDateDDMMYYYY(payload.owner__bus_begin)}` : undefined);
+    const applicantShort = applicant?.applicant__short_name ?? applicant?.name;
+    const applicantLegalAddress = applicant?.applicant_address__full_address ?? applicant?.applicant_address__name;
+    const applicantOkved = [applicant?.applicant__okved_code, applicant?.applicant__okved_name].filter(Boolean).join(" ") || undefined;
 
-    const ownerRows: [string, string | undefined][] = [
-        ["Полное наименование", owner__full_name],
-        ["ОГРН", owner__ogrn],
-        ["ИНН", owner__inn],
-        ["КПП", owner__kpp],
-        ["Статус", ownerStatusText],
-        ["Код основного вида деятельности", ownerActivityCode],
-        ["ФИО руководителя", owner__head_name],
-        ["Должность руководителя", owner__head_position],
-        ["Юридический адрес", ownerLegalAddress],
-    ];
+    const certDatesText =
+        cert?.bus_begin
+            ? `${formatDateDDMMYYYY(cert.bus_begin)}${cert.bus_end && cert.bus_end !== "2399-12-31" ? ` — ${formatDateDDMMYYYY(cert.bus_end)}` : ""}`
+            : undefined;
 
     return (
-        <Box sx={{ py: 2 }}>
-            <Typography variant="h6" sx={{ mb: 2 }}>
-                Система сертификации — {system_name}
+        <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+            <Typography variant="h3" sx={{ mb: 4, flex: "0 0 auto" }} align="center">
+                Сертификат — {cert?.docum_number ?? "—"}
             </Typography>
-            <Grid2 container spacing={2} alignItems="stretch">
-                {/* Слева: юр.лицо — владелец (по дизайну) */}
+
+            <Grid2
+                sx={{ flex: 1, minHeight: 0, overflowY: "auto", "&>*": { height: "100%" } }}
+                container
+                spacing={2}
+                alignItems="stretch"
+            >
+                {/* Слева: орган */}
                 <Grid2 size={{ xs: 12, md: 4 }}>
-                    <Paper
-                        variant="outlined"
-                        sx={{
-                            p: 2,
-                            height: "100%",
-                            bgcolor: "background.paper",
-                            borderColor: "divider",
-                        }}
+                    <InfoCard
+                        variant="elevation"
+                        title="Орган"
+                        statusLiter={organ?.organ_status_ as any}
+                        statusTitle={organ?.organ_status__name ?? undefined}
+                        imageSrc={organ?.organ_logo_path ? `${ASSETS_URL}/${organ.organ_logo_path}` : undefined}
                     >
-                        <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1.5 }}>
-                            Компания (ЮЛ/ИП)
-                        </Typography>
-                        {owner__logo_path && (
-                            <Box sx={{ mb: 1.5 }}>
-                                <img
-                                    src={`${ASSETS_URL}/${owner__logo_path}`}
-                                    alt=""
-                                    style={{ maxHeight: 48, objectFit: "contain" }}
-                                />
-                            </Box>
-                        )}
                         <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 1.5 }}>
-                            {owner__short_name ?? "—"}
+                            {organ?.full_name ?? organ?.name ?? "—"}
                         </Typography>
-                        {ownerRows.map(([label, value]) => (
-                            <Box key={label} sx={{ mb: 1 }}>
+
+                        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                            <Box>
                                 <Typography variant="caption" color="text.secondary" display="block">
-                                    {label}
+                                    Номер ОС
                                 </Typography>
                                 <Typography variant="body2">
-                                    {value != null && value !== "" ? value : "—"}
+                                    {organ?.identifier ?? "—"}
                                 </Typography>
                             </Box>
-                        ))}
-                    </Paper>
-                </Grid2>
-
-                {/* Середина: основная информация */}
-                <Grid2 size={{ xs: 12, md: 4 }}>
-                    <Paper
-                        variant="outlined"
-                        sx={{
-                            p: 2,
-                            height: "100%",
-                            bgcolor: "background.paper",
-                            borderColor: "divider",
-                        }}
-                    >
-                        <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
-                            Номер свидетельства
-                        </Typography>
-                        <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap", mb: 2 }}>
-                            <Typography variant="body1" fontWeight={500}>
-                                {system_cert_number ?? "—"}
-                            </Typography>
-                            {(status__name || bus_begin) && (
-                                <Typography variant="body2" color="text.secondary">
-                                    {status__name ?? ""} {bus_begin ? `с ${formatDateDDMMYYYY(bus_begin)}` : ""}
-                                </Typography>
+                            {organ?.organ_fact_address && (
+                                <Box>
+                                    <Typography variant="caption" color="text.secondary" display="block">
+                                        Фактический адрес ОС
+                                    </Typography>
+                                    <Typography variant="body2">
+                                        {organ.organ_fact_address}
+                                    </Typography>
+                                </Box>
                             )}
                         </Box>
-                        {accreditation != null && accreditation !== "" && (
-                            <>
-                                <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 0.5 }}>
-                                    Область распространения
-                                </Typography>
-                                <Typography variant="body2" sx={{ whiteSpace: "pre-wrap", mb: 2 }}>
-                                    {accreditation}
-                                </Typography>
-                            </>
-                        )}
-                        {docum_web_reference != null && docum_web_reference !== "" && (
-                            <>
-                                <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 0.5 }}>
-                                    Основополагающий документ (правила) системы
-                                </Typography>
-                                <Link href={docum_web_reference} target="_blank" rel="noopener noreferrer" variant="body2">
-                                    {docum_web_reference}
-                                </Link>
-                            </>
-                        )}
-                    </Paper>
+                    </InfoCard>
                 </Grid2>
 
-                {/* Справа: список аккредитованных ОС */}
+                {/* Середина: данные сертификата */}
                 <Grid2 size={{ xs: 12, md: 4 }}>
-                    <Paper
+                    <InfoCard
                         variant="outlined"
-                        sx={{
-                            p: 2,
-                            height: "100%",
-                            bgcolor: "background.paper",
-                            borderColor: "divider",
-                        }}
+                        title="Сертификат"
+                        statusLiter={cert?.docum_status_ as any}
+                        statusTitle={cert?.cert_status__name ?? undefined}
                     >
-                        <Typography
-                            variant="subtitle2"
-                            sx={{
-                                mb: 1.5,
-                                px: 1.5,
-                                py: 0.75,
-                                borderRadius: 1,
-                                bgcolor: "action.hover",
-                                display: "inline-block",
-                            }}
-                        >
-                            АККРЕДИТАЦИИ
-                        </Typography>
-                        {organs.length === 0 ? (
-                            <Typography variant="body2" color="text.secondary">
-                                Нет данных
-                            </Typography>
-                        ) : (
-                            <Box component="ul" sx={{ m: 0, pl: 2 }}>
-                                {organs.map((organ) => (
-                                    <Typography component="li" key={organ.id ?? organ.gid} variant="body2" sx={{ mb: 0.75 }}>
-                                        {organ.name ?? organ.full_name ?? organ.organ_name ?? organ.identifier ?? "—"}
-                                        {organ.identifier != null && organ.identifier !== "" && organ.name !== organ.identifier && (
-                                            <Typography component="span" variant="body2" color="text.secondary" sx={{ ml: 0.5 }}>
-                                                ({organ.identifier})
-                                            </Typography>
-                                        )}
+                        <Box sx={{ display: "flex", flexDirection: "column", gap: 1.25 }}>
+                            <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap" }}>
+                                <Typography variant="body1" fontWeight={600}>
+                                    {cert?.docum_number ?? "—"}
+                                </Typography>
+                                {certDatesText && (
+                                    <Typography variant="body2" color="text.secondary">
+                                        {certDatesText}
                                     </Typography>
-                                ))}
+                                )}
                             </Box>
-                        )}
-                    </Paper>
+
+                            <Box>
+                                <Typography variant="caption" color="text.secondary" display="block">
+                                    Наименование
+                                </Typography>
+                                <Typography variant="body2">
+                                    {cert?.name ?? "—"}
+                                </Typography>
+                            </Box>
+
+                            <Box>
+                                <Typography variant="caption" color="text.secondary" display="block">
+                                    Номер бланка
+                                </Typography>
+                                <Typography variant="body2">
+                                    {cert?.blank_number ?? "—"}
+                                </Typography>
+                            </Box>
+
+                            <Box>
+                                <Typography variant="caption" color="text.secondary" display="block">
+                                    Учетный номер регистра
+                                </Typography>
+                                <Typography variant="body2">
+                                    {cert?.doc_reg_num ?? "—"}
+                                </Typography>
+                            </Box>
+
+                            {cert?.system__name && (
+                                <Box>
+                                    <Typography variant="caption" color="text.secondary" display="block">
+                                        Система сертификации
+                                    </Typography>
+                                    <Typography variant="body2">
+                                        {cert.system__name}
+                                    </Typography>
+                                </Box>
+                            )}
+
+                            {cert?.docum_accreditation_scope && (
+                                <Box>
+                                    <Typography variant="caption" color="text.secondary" display="block">
+                                        Область распространения
+                                    </Typography>
+                                    <Typography variant="body2" sx={{ whiteSpace: "pre-wrap" }}>
+                                        {cert.docum_accreditation_scope}
+                                    </Typography>
+                                </Box>
+                            )}
+
+                            {cert?.standart && (
+                                <Box>
+                                    <Typography variant="caption" color="text.secondary" display="block">
+                                        Стандарты
+                                    </Typography>
+                                    <Typography variant="body2" sx={{ whiteSpace: "pre-wrap" }}>
+                                        {cert.standart}
+                                    </Typography>
+                                </Box>
+                            )}
+                        </Box>
+                    </InfoCard>
+                </Grid2>
+
+                {/* Справа: заявитель */}
+                <Grid2 size={{ xs: 12, md: 4 }}>
+                    <CompanyCard
+                        company={{
+                            title: "Заявитель",
+                            variant: "outlined",
+                            logoPath: applicant?.logo_path ?? null,
+                            shortName: applicantShort ?? null,
+                            statusLiter: applicant?.applicant_status__gid as any,
+                            statusTitle: applicant?.applicant_status__name ?? undefined,
+                            fullName: applicant?.name ?? null,
+                            inn: applicant?.inn ?? null,
+                            ogrn: applicant?.ogrn ?? null,
+                            kpp: applicant?.applicant__kpp ?? null,
+                            busBegin: applicant?.bus_begin ?? null,
+                            liquidationDate: null,
+                            okvedCode: applicant?.applicant__okved_code ?? null,
+                            okvedName: applicant?.applicant__okved_name ?? null,
+                            headName: applicant?.applicant__head_name ?? null,
+                            headPosition: null,
+                            addressFull: applicantLegalAddress ?? null,
+                            addressName: null,
+                        }}
+                    />
                 </Grid2>
             </Grid2>
         </Box>

@@ -8,10 +8,11 @@ export const config: ITableConfig<ICertificate> = {
     withRowActions: false,
     columnOrder: [
         "cert__name",
+        "cert__bus_begin",
+        "cert__data_end",
         "system__name",
         "organ__name",
         "applicant__short_name",
-        "cert__bus_begin",
         "cert__status",
     ],
     hiddenColumns: [
@@ -23,6 +24,8 @@ export const config: ITableConfig<ICertificate> = {
         "applicant__logo",
         "applicant__tech_end",
         "applicant__jur_tech_end",
+        "applicant__inn",
+        "applicant__ogrn",
         "cert__tech_end",
         "system__tech_end",
         "organ__tech_end",

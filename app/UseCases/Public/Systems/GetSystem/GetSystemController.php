@@ -10,12 +10,9 @@ class GetSystemController
 {
     public function __invoke(GetSystemRequest $request): JsonResponse
     {
-        $system = SystemView::item($request->validated('id'))
-            ->withOwnerJur()
-            ->withOwnerAddress()
-            ->withOwnerPosition()
-            ->withOwnerOkved()
-            ->with('organs')
+        $system = SystemView::query()
+            ->where('systems_view.id', $request->validated('id'))
+            ->with(['organs', 'owner'])
             ->first();
 
         if ($system === null) {

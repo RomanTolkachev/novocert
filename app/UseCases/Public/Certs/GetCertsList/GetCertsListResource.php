@@ -12,6 +12,7 @@ class GetCertsListResource extends JsonResource
 
     protected array $dateFields = [
         'cert__bus_begin',
+        'cert__data_end',
     ];
 
     public function toArray($request): array

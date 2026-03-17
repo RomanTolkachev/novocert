@@ -1,4 +1,5 @@
 import type { IOrgan } from "@/entities/organ";
+import type { ICompany } from "@/entities/company";
 
 export interface ISystem {
     id: number;
@@ -41,4 +42,5 @@ export interface ISystem {
 /** Ответ get-system (детальная страница): система + органы. */
 export interface ISystemDetail extends ISystem {
     organs?: IOrgan[];
+    owner?: ICompany | null;
 }

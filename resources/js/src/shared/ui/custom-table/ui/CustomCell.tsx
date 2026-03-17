@@ -90,7 +90,7 @@ export const CustomCell = <T extends Record<string, any>>({
         // organs
         case "organ_name": {
             const { id, original } = context.row;
-            const recordId = (original as Record<string, unknown>).id ?? (original as Record<string, unknown>).gid ?? id;
+            const recordId = (original as Record<string, unknown>).gid;
             const { legal_logo_path } = original;
             return (
                 <TextWithImageCell
@@ -111,36 +111,11 @@ export const CustomCell = <T extends Record<string, any>>({
             }
             return '-';
 
-        // case 'avatar':
-        //     if (value) {
-        //         return <ImageSmall rounded path={`${ASSETS_URL}/${context.row.original.avatar}`} />
-        //     }
-        //     return <TableCell align="center" key={id}>-</TableCell>;
-
-        // case 'cert_system_name':
-        //     if (value) {
-        //         const { id, original: { docum_web_reference } } = context.row;
-        //         return (
-        //             <TextWithImageCell id={id} text={value} img_path={docum_web_reference} />
-        //         );
-        //     }
-
-        //     return <TableCell align="center" key={id}>-</TableCell>;
-
-        // case "type__cert_system_name": {
-        //     const { id, original: { type__img_path } } = context.row;
-
-        //     return (
-        //         <TextWithImageCell id={id} text={value} img_path={type__img_path} />
-        //     );
-        // }
-
-        // ячейка в 2 таблицах, системы и органы, поэтому через ??
         case 'system_name':
             if (value) {
                 const { id, original } = context.row;
                 const { img_path, system_img_path } = original;
-                const recordId = (original as Record<string, unknown>).id ?? (original as Record<string, unknown>).gid ?? id;
+                const recordId = (original as Record<string, unknown>).id ;
                 const system_name = query.system_name;
                 return (
                     <TextWithImageCell

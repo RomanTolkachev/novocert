@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\HasCarbonDates;
 use App\Models\Traits\HasQueryFilters;
+use Illuminate\Database\Eloquent\Builder;
 
 class Cli extends Model
 {

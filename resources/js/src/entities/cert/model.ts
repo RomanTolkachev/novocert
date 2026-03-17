@@ -3,8 +3,11 @@ export interface ICertificate {
     applicant__jur_tech_end: string;
     applicant__logo: string;
     applicant__short_name: string;
+    applicant__inn: string;
+    applicant__ogrn: string;
     applicant__tech_end: string;
     cert__bus_begin: string;
+    cert__data_end: string;
     cert__id: string;
     cert__name: string;
     cert__status: string;
@@ -28,8 +31,11 @@ const CERTIFICATE_KEYS = [
     "applicant__jur_tech_end",
     "applicant__logo",
     "applicant__short_name",
+    "applicant__inn",
+    "applicant__ogrn",
     "applicant__tech_end",
     "cert__bus_begin",
+    "cert__data_end",
     "cert__id",
     "cert__name",
     "cert__status",

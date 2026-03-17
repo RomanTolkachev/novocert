@@ -1,4 +1,5 @@
 import type { IOrgan } from "@/entities/organ";
+import type { ICompany } from "@/entities/company";
 
 export type TStatusLiter = "N" | "A" | "L" | "PL" | "B" | "T" | "P" | "S" | "D" | undefined | null;
 
@@ -33,25 +34,7 @@ export interface IDocument {
 
 /** Тип ответа get-organ (детальная страница органа). */
 export interface IOrganDetail extends IOrgan {
-    owner__gid: string;
-    owner__short_name?: string;
-    owner__full_name?: string;
-    owner__name?: string;
-    owner__kpp?: string;
-    owner__bus_begin?: string;
-    owner__liquidation_date?: string;
-
-    owner_address__full_address?: string;
-    owner_address__name?: string;
-
-    owner__head_name?: string;
-    owner__head_position?: string;
-
-    owner__okved_code?: string | null;
-    owner__okved_name?: string | null;
-
-    owner_status__gid?: TStatusLiter;
-    owner_status__name?: string;
+    owner?: ICompany | null;
 
     documents?: IDocument[];
 }

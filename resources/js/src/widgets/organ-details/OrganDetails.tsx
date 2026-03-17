@@ -2,6 +2,7 @@ import type { FC } from "react";
 import { Box, Grid2, List, ListItemButton, ListItemText, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { ASSETS_URL, ExternalLink, formatDateDDMMYYYY, GlobeIcon, InfoCard, Preloader, useDetailedData, type DetailScope } from "@/shared";
+import { CompanyCard } from "@/widgets/ui";
 import { StatusIcon } from "@/shared/ui/custom-table/ui/cells/StatusIcon";
 import type { IOrganDetail } from "./types";
 
@@ -41,41 +42,10 @@ export const OrganDetails: FC<OrganDetailsProps> = ({ scope }) => {
         organ_status_,
         system_name,
         system_img_path,
-        legal_logo_path,
         docum_web_reference,
         documents = [],
-
-        owner__short_name,
-        owner__full_name,
-        owner__kpp,
-        owner_status__gid,
-        owner_status__name,
-        owner__head_name,
-        owner__head_position,
-        owner__okved_code,
-        owner__okved_name,
-        owner_address__full_address,
-        owner_address__name,
-        owner__bus_begin,
-        owner__liquidation_date,
+        owner,
     } = payload;
-
-    const ownerLegalAddress = owner_address__full_address ?? owner_address__name;
-    const ownerActivityCode = [owner__okved_code, owner__okved_name].filter(Boolean).join(" ") || undefined;
-    const isLiquidated = owner__liquidation_date && owner__liquidation_date !== "1900-01-01";
-    const ownerStatusText = isLiquidated
-        ? (owner__liquidation_date ? `Ликвидирован с ${formatDateDDMMYYYY(owner__liquidation_date)}` : "Ликвидирован")
-        : (owner__bus_begin ? `Действует с ${formatDateDDMMYYYY(owner__bus_begin)}` : undefined);
-
-    const ownerRows: [string, string | undefined][] = [
-        ["Полное наименование", owner__full_name],
-        ["КПП", owner__kpp],
-        ["Статус", ownerStatusText],
-        ["Код основного вида деятельности", ownerActivityCode],
-        ["ФИО руководителя", owner__head_name],
-        ["Должность руководителя", owner__head_position],
-        ["Юридический адрес", ownerLegalAddress],
-    ];
 
     const organDatesText =
         organ_cert_begin_date
@@ -96,28 +66,11 @@ export const OrganDetails: FC<OrganDetailsProps> = ({ scope }) => {
             >
                 {/* Слева: юр.лицо */}
                 <Grid2 size={{ xs: 12, md: 4 }}>
-                    <InfoCard
-                        variant="elevation"
+                    <CompanyCard
                         title="Компания"
-                        statusLiter={owner_status__gid as any}
-                        statusTitle={owner_status__name ?? undefined}
-                        imageSrc={legal_logo_path ? `${ASSETS_URL}/${legal_logo_path}` : undefined}
-                    >
-                        <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 1.5 }}>
-                            {owner__short_name ?? "—"}
-                        </Typography>
-
-                        {ownerRows.map(([label, value]) => (
-                            <Box key={label} sx={{ mb: 1 }}>
-                                <Typography variant="caption" color="text.secondary" display="block">
-                                    {label}
-                                </Typography>
-                                <Typography variant="body2">
-                                    {value != null && value !== "" ? value : "—"}
-                                </Typography>
-                            </Box>
-                        ))}
-                    </InfoCard>
+                        variant="elevation"
+                        company={owner}
+                    />
                 </Grid2>
 
                 {/* Середина: информация об органе */}

@@ -1,0 +1,2 @@
+export { CertDetails } from "./CertDetails";
+

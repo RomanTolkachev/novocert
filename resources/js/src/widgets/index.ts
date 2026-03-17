@@ -1,4 +1,5 @@
 export { Bio } from "./bio"
 export { SystemDetails } from "./system-details"
 export { OrganDetails } from "./organ-details"
+export { CertDetails } from "./cert-details"
 export { HomeSystemsSlider } from "./home-systems-slider"

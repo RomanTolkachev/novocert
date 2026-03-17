@@ -2,6 +2,7 @@ import type { FC } from "react";
 import { Box, Grid2, List, ListItemButton, ListItemText, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { ASSETS_URL, ExternalLink, formatDateDDMMYYYY, GlobeIcon, InfoCard, makeList, Preloader, useDetailedData, type DetailScope } from "@/shared";
+import { CompanyCard } from "@/widgets/ui";
 import type { ISystemDetail } from "./types";
 import { StatusIcon } from "@/shared/ui/custom-table/ui/cells/StatusIcon";
 
@@ -33,44 +34,17 @@ export const SystemDetails: FC<CertDetailsProps> = ({ scope }) => {
     }
 
     const {
-        owner__short_name,
-        owner__full_name,
-        owner__inn,
-        owner__ogrn,
-        owner__kpp,
-        owner__logo_path,
-        owner__head_name,
-        owner__head_position,
         system_name,
         system_cert_number,
         img_path,
         organ_status_,
         status__name,
-        status__gid,
         bus_begin,
         accreditation,
         docum_web_reference,
         organs = [],
+        owner,
     } = payload;
-
-    const ownerLegalAddress = payload.owner_address__full_address ?? payload.owner_address__name;
-    const ownerActivityCode = [payload.owner__okved_code, payload.owner__okved_name].filter(Boolean).join(" ") || undefined;
-    const isLiquidated = payload.owner__liquidation_date && payload.owner__liquidation_date !== "1900-01-01";
-    const ownerStatusText = isLiquidated
-        ? (payload.owner__liquidation_date ? `Ликвидирован с ${formatDateDDMMYYYY(payload.owner__liquidation_date)}` : "Ликвидирован")
-        : (payload.owner__bus_begin ? `Действует с ${formatDateDDMMYYYY(payload.owner__bus_begin)}` : undefined);
-
-    const ownerRows: [string, string | undefined][] = [
-        ["Полное наименование", owner__full_name],
-        ["ОГРН", owner__ogrn],
-        ["ИНН", owner__inn],
-        ["КПП", owner__kpp],
-        ["Статус", ownerStatusText],
-        ["Код основного вида деятельности", ownerActivityCode],
-        ["ФИО руководителя", owner__head_name],
-        ["Должность руководителя", owner__head_position],
-        ["Юридический адрес", ownerLegalAddress],
-    ];
 
     return (
         <Box sx={{ height: "100%", display: "flex", flexDirection: "column"}}>
@@ -86,27 +60,11 @@ export const SystemDetails: FC<CertDetailsProps> = ({ scope }) => {
             >
                 {/* Слева: юр.лицо — владелец (по дизайну) */}
                 <Grid2 size={{ xs: 12, md: 4 }}>
-                    <InfoCard
-                        variant="elevation"
+                    <CompanyCard
                         title="Владелец"
-                        statusLiter={status__gid as any}
-                        statusTitle={status__name ?? undefined}
-                        imageSrc={owner__logo_path ? `${ASSETS_URL}/${owner__logo_path}` : undefined}
-                    >
-                        <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 1.5 }}>
-                            {owner__short_name ?? "—"}
-                        </Typography>
-                        {ownerRows.map(([label, value]) => (
-                            <Box key={label} sx={{ mb: 1 }}>
-                                <Typography variant="caption" color="text.secondary" display="block">
-                                    {label}
-                                </Typography>
-                                <Typography variant="body2">
-                                    {value != null && value !== "" ? value : "—"}
-                                </Typography>
-                            </Box>
-                        ))}
-                    </InfoCard>
+                        variant="elevation"
+                        company={owner}
+                    />
                 </Grid2>
 
                 {/* Середина: основная информация */}

@@ -11,12 +11,7 @@ class GetOrganController
     public function __invoke(GetOrganRequest $request): JsonResponse
     {
         $organ = OrganView::where("organs_view.gid", $request->validated('id'))
-            ->withOwnerJur()
-            ->withOwnerAddress()
-            ->withOwnerPosition()
-            ->withOwnerOkved()
-            ->withOwnerStatus()
-            ->with('documents')
+            ->with(['documents', 'owner'])
             ->first();
 
         if ($organ === null) {

@@ -34,6 +34,16 @@ class CertsFilters extends AbstractFilter
         return $this->builder->where('applicant__short_name', 'LIKE', "%{$value}%");
     }
 
+    public function applicantInn(string $value): Builder
+    {
+        return $this->builder->where('applicant__inn', 'LIKE', "%{$value}%");
+    }
+
+    public function applicantOgrn(string $value): Builder
+    {
+        return $this->builder->where('applicant__ogrn', 'LIKE', "%{$value}%");
+    }
+
     public function certBusBegin($range): Builder
     {
         $range = is_array($range) ? array_values($range) : [$range, null];
@@ -42,6 +52,16 @@ class CertsFilters extends AbstractFilter
         return $this->builder
             ->when($from, fn (Builder $q) => $q->whereDate('cert__bus_begin', '>=', $from))
             ->when($to, fn (Builder $q) => $q->whereDate('cert__bus_begin', '<=', $to));
+    }
+
+    public function certDataEnd($range): Builder
+    {
+        $range = is_array($range) ? array_values($range) : [$range, null];
+        [$from, $to] = $range + [null, null];
+
+        return $this->builder
+            ->when($from, fn (Builder $q) => $q->whereDate('cert__data_end', '>=', $from))
+            ->when($to, fn (Builder $q) => $q->whereDate('cert__data_end', '<=', $to));
     }
 
     public function certStatus($values): Builder

@@ -102,6 +102,8 @@ The MSSQL view for certificates/documents (DocumentView) is defined as:
 SELECT TOP (1000)
     dbo.docum.name              AS cert__name,
     dbo.cli_jur.short_name      AS applicant__short_name,
+    dbo.cli.inn                 AS applicant__inn,
+    dbo.cli.ogrn                AS applicant__ogrn,
     dbo.docum.docum_status_     AS cert__status,
     dbo.organ_reestr_system_.name AS system__name,
     dbo.organ.name              AS organ__name,
