@@ -24,5 +24,5 @@ export const translations: Record<keyof ICertificate, string> = {
     "organ__gid": "ID органа",
     "deletable": "Действия",
     "editable": "Действия",
-    "hasBusinessCard": "карточка организации"
+    "hasBusinessCard": "карточка организации",
 };

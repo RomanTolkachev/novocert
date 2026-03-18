@@ -1,6 +1,6 @@
 import type { IOrgan } from "./model";
 
-export const translations: Record<keyof IOrgan, string> = {
+export const translations: Partial<Record<keyof IOrgan, string>> = {
     gid: "ID",
     organ_name: "Орган по сертификации",
     organ_number: "Регистрационный номер аттестата ОС",
@@ -17,5 +17,5 @@ export const translations: Record<keyof IOrgan, string> = {
     legal_ogrn: "ОГРН владельца ОС",
     legal_logo_path: "Логотип владельца ОС",
     certs_count: "Количество сертификатов ОС",
-    docum_web_reference: "Ссылка на ОС"
+    docum_web_reference: "Ссылка на ОС",
 };

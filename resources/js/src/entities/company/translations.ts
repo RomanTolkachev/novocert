@@ -2,7 +2,9 @@ import type { ICompany } from "./model";
 
 export const translations: Record<keyof ICompany, string> = {
     "id": "id",
-    "gid": "gid", 
+    "gid": "gid",
+    company_bus_begin: "дата начала деят.",
+    company_bus_end: "дата оконч. деят.",
     "parent": "Родитель",
     "inn": "ИНН / огрн",
     "ogrn": "ОГРН",
@@ -76,5 +78,5 @@ export const translations: Record<keyof ICompany, string> = {
     "cli_phys": "Физическое лицо",
     deletable: "удалить",
     editable: "редактировать",
-    hasBusinessCard: "карточка организации"
+    hasBusinessCard: "карточка организации",
 };

@@ -20,7 +20,7 @@
 
 - `dataUrl: string` — endpoint для данных таблицы (ожидается Laravel-пагинатор с полями `data`, `current_page`, `last_page`, `total`).
 - `filtersUrl: string` — endpoint для конфигурации фильтров (`IFilterListItem[]`).
-- `translations: Record<keyof T, string>` — словарь заголовков колонок по ключам полей сущности.
+- `translations: Partial<Record<keyof T, string>>` — словарь заголовков колонок по ключам полей сущности (можно указывать только нужные).
 - `columnOrder?: (keyof T)[]` — желаемый порядок колонок.
 - `hiddenColumns?: (keyof T)[]` — скрытые колонки.
 - `withRowActions: boolean` — нужны ли действия по строке.

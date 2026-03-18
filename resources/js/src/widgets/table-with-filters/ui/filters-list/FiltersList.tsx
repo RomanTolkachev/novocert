@@ -15,7 +15,7 @@ import { CheckBoxInput } from "../input-checkbox";
 import { DateRangeInput } from "../input-date";
 import { ChipList } from "./ChipList";
 
-function formatSortOptionLabel(value: string, translations?: Record<string, string>): string {
+function formatSortOptionLabel(value: string, translations?: Partial<Record<string, string>>): string {
     const match = value.match(/^(.+)_(asc|desc)$/);
     if (!match) return value;
     const [, column] = match;

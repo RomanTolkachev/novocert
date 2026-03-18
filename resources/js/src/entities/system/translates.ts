@@ -1,8 +1,9 @@
 import type { ISystem } from "./model";
 
-export const translations: Record<keyof ISystem, string> = {
+export const translations: Partial<Record<keyof ISystem, string>> = {
     id: "ID системы",
     gid: "GID системы",
+    
     system_name: "Наименование системы сертификации",
     system_cert_number: "Номер сертификата СДС",
     accreditation: "Область распространения системы (объекты сертификации)",
@@ -20,5 +21,5 @@ export const translations: Record<keyof ISystem, string> = {
     owner__logo_path: "Путь к логотипу владельца",
     status__gid: "GID статуса системы",
     status__name: "Статус СДС",
-    docum_web_reference: "ссылка"
+    docum_web_reference: "ссылка",
 };

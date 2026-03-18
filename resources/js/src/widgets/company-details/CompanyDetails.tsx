@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Box, Grid2, Typography, Accordion, AccordionSummary, AccordionDetails, List, ListItemButton, ListItemText } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Link as RouterLink, useLocation } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { formatDateDDMMYYYY, InfoCard, Preloader, useDetailedData, type DetailScope } from "@/shared";
 import { CompanyCard } from "@/widgets/ui";
 import type { ICompanyDetailPayload } from "./types";
@@ -24,7 +24,6 @@ const groupByType = (docs: ICompanyDetailPayload["receivedDocs"]) => {
 
 export const CompanyDetails: FC<CompanyDetailsProps> = ({ scope }) => {
     const { data, isFetching, error } = useDetailedData(scope, "company");
-    const location = useLocation();
 
     if (isFetching) return <Preloader />;
 

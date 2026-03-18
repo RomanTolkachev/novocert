@@ -20,7 +20,7 @@ import { CustomTechCell } from "./cells/CustomTechCell";
 
 interface CustomTableProps<T extends Record<string, any>> {
     data: T[] | undefined;
-    translations: Record<keyof T, string>;
+    translations: Partial<Record<keyof T, string>>;
     hiddenColumns?: (keyof T)[];
     columnOrder?: (keyof T)[];
     loading?: boolean;

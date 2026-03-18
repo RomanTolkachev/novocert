@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { Box, Grid2, Typography } from "@mui/material";
-import { formatDateDDMMYYYY, Preloader, useDetailedData, type DetailScope } from "@/shared";
+import { Preloader, useDetailedData, type DetailScope } from "@/shared";
 import { CompanyCard, DocumentCard } from "@/widgets/ui";
 import type { IDocDetailPayload } from "./types";
 
@@ -31,11 +31,6 @@ export const DocDetails: FC<DocDetailsProps> = ({ scope }) => {
     }
 
     const { doc, from, to } = payload;
-
-    const dateText =
-        doc.fb_bus_begin
-            ? `${formatDateDDMMYYYY(doc.fb_bus_begin)}${doc.fb_bus_end && doc.fb_bus_end !== "2399-12-31" ? ` — ${formatDateDDMMYYYY(doc.fb_bus_end)}` : ""}`
-            : undefined;
 
     return (
         <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>

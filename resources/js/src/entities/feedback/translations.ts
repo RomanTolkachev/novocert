@@ -21,5 +21,5 @@ export const translations: Record<keyof IFeedback, string> = {
     from_jur__gid: "ID юр.лица от",
     from_jur__short_name: "От кого",
     from_jur__laravel_through_key: "Служебный ключ от",
-    bus_begin: "Дата добавления"
-}
+    bus_begin: "Дата добавления",
+};

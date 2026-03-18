@@ -3,7 +3,7 @@ import type { IAction } from "@/shared/ui/custom-table";
 export interface ITableConfig<T extends Record<string, any>> {
     dataUrl: string;
     filtersUrl: string;
-    translations: Record<keyof T, string>;
+    translations: Partial<Record<keyof T, string>>;
     columnOrder?: (keyof T)[];
     hiddenColumns?: (keyof T)[];
     withRowActions: boolean
@@ -31,7 +31,7 @@ export type TFormValues = {
 export type ICustomSubmitHandlerContext = {
     filtersData: IFilterListItem[]
     /** Переводы колонок таблицы — для подписей опций селекта сортировки */
-    translations?: Record<string, string>
+    translations?: Partial<Record<string, string>>
     customSubmitHandler: (formData: Record<string, unknown>, debounceTime?: number) => void
     customResetHandler: (perPage: any) => void
     customResetField: (fieldName: string) => void
